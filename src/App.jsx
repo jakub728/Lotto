@@ -1,8 +1,27 @@
-import { useState } from "react";
 import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout";
+import Home from "./components/Home";
+import NotFound from "./components/NotFound";
+import Results from "./components/Results";
+import Generate from "./components/Generate";
+import DataProvider from "./context/Context";
 
 function App() {
-  return <>Hi</>;
+  return (
+    <>
+      <DataProvider>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="/results" element={<Results />}></Route>
+            <Route path="/generate" element={<Generate />}></Route>
+            <Route path="*" element={<NotFound />}></Route>
+          </Route>
+        </Routes>
+      </DataProvider>
+    </>
+  );
 }
 
 export default App;
