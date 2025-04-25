@@ -45,11 +45,12 @@ app.get("/api/statistic", async (req, res) => {
   };
 
   const gameType = "EuroJackpot";
+  const totalDraws = 100;
   const url = new URL(
     "https://developers.lotto.pl/api/open/v1/lotteries/draw-statistics/numbers-frequency"
   );
   url.searchParams.append("gameType", gameType);
-
+  url.searchParams.append("totalDraws", totalDraws);
   try {
     const response = await fetch(url, options);
     if (!response.ok) {
