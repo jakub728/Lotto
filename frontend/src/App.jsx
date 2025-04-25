@@ -6,6 +6,7 @@ import NotFound from "./components/NotFound";
 import Results from "./components/Results";
 import Generate from "./components/Generate";
 import DataProvider from "./context/Context";
+import "font-awesome/css/font-awesome.min.css";
 
 function App() {
   return (
