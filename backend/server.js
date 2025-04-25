@@ -42,7 +42,7 @@ app.get("/api/statistic", async (req, res) => {
 
   const params = {
     index: 1,
-    size: 100,
+    size: 10,
     sort: "frequency",
     order: "DESC",
   };
@@ -62,7 +62,7 @@ app.get("/api/statistic", async (req, res) => {
   try {
     const response = await fetch(url, options);
     if (!response.ok) {
-      throw new Error(`Could not fetch data: ${response.status}: ${errorText}`);
+      throw new Error(`Could not fetch data: ${response.status}`);
     }
     const result = await response.json();
     res.json(result);
