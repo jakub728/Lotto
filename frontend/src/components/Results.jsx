@@ -7,10 +7,8 @@ export default function Results() {
 
   useEffect(() => {
     async function fetchData() {
-
-
       try {
-        const response = await fetch("http://localhost:5000/api/lottery-results");
+        const response = await fetch("https://lotto-backend-pfhh.onrender.com");
         if (!response.ok) {
           throw new Error(`Could not fetch data: ${response.status}`);
         }
