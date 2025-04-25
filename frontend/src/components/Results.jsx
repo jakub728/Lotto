@@ -50,17 +50,17 @@ export default function Results() {
     let newTwo = data[1].results[0].specialResults;
     newTwo = newTwo.sort((a, b) => a - b);
 
-    // if (!isExisting) {
-    //   setLastResults((prev) => [
-    //     ...prev,
-    //     {
-    //       date: newDate,
-    //       dateId: id,
-    //       five: newFive,
-    //       two: newTwo,
-    //     },
-    //   ]);
-    // }
+    if (!isExisting) {
+      setLastResults((prev) => [
+        ...prev,
+        {
+          date: newDate,
+          dateId: id,
+          five: newFive,
+          two: newTwo,
+        },
+      ]);
+    }
   }, [data]);
 
   const lastFiveSorted = [...lastResults]
