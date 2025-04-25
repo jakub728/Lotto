@@ -7,22 +7,10 @@ export default function Results() {
 
   useEffect(() => {
     async function fetchData() {
-      const options = {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          secret: "FpOf7GpFJIXoDpIuMsuUnTztmYC3QHVG4dLi5FOF+wo=",
-        },
-      };
 
-      const gameType = "EuroJackpot";
-      const url = new URL(
-        "https://developers.lotto.pl/api/open/v1/lotteries/draw-results/last-results/"
-      );
-      url.searchParams.append("gameType", gameType);
 
       try {
-        const response = await fetch(url, options);
+        const response = await fetch("http://localhost:5000/api/lottery-results");
         if (!response.ok) {
           throw new Error(`Could not fetch data: ${response.status}`);
         }
