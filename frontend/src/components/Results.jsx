@@ -45,17 +45,22 @@ export default function Results() {
 
     const isExisting = lastResults.some((result) => result.dateId === id);
 
-    if (!isExisting) {
-      setLastResults((prev) => [
-        ...prev,
-        {
-          date: newDate,
-          dateId: id,
-          five: data[1].results[0].resultsJson,
-          two: data[1].results[0].specialResults,
-        },
-      ]);
-    }
+    let newFive = data[1].results[0].resultsJson;
+    newFive = newFive.sort((a, b) => a - b);
+    let newTwo = data[1].results[0].specialResults;
+    newTwo = newTwo.sort((a, b) => a - b);
+
+    // if (!isExisting) {
+    //   setLastResults((prev) => [
+    //     ...prev,
+    //     {
+    //       date: newDate,
+    //       dateId: id,
+    //       five: newFive,
+    //       two: newTwo,
+    //     },
+    //   ]);
+    // }
   }, [data]);
 
   const lastFiveSorted = [...lastResults]
