@@ -43,7 +43,7 @@ app.get("/api/statistic", async (req, res) => {
   const params = {
     index: 1,
     size: 100,
-    sort: "drawDate",
+    sort: "frequency",
     order: "DESC",
   };
 
@@ -62,17 +62,18 @@ app.get("/api/statistic", async (req, res) => {
   try {
     const response = await fetch(url, options);
     if (!response.ok) {
-      throw new Error(`Could not fetch data: ${response.status}`);
+      throw new Error(`Could not fetch data: ${response.status}: ${errorText}`);
     }
     const result = await response.json();
-    res.json(result); // Przekazujemy dane z zewnętrznego API do klienta (frontend)
+    res.json(result);
   } catch (error) {
     console.error("Fetch error:", error);
-    res.status(500).json({ error: "Failed to fetch lottery data" });
+    res
+      .status(500)
+      .json({ error: `Failed to fetch lottery data: ${error.message}` });
   }
 });
 
-// Uruchamiamy serwer na wybranym porcie
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
