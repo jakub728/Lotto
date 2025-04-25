@@ -44,8 +44,8 @@ app.get("/api/statistic", async (req, res) => {
     },
   };
 
-  const gameType = "EuroJackpot";
-  const totalDraws = 100;
+  const gameType = "Eurojackpot";
+  const totalDraws = 50;
   const url = new URL(
     "https://developers.lotto.pl/api/open/v1/lotteries/draw-statistics/numbers-frequency"
   );
