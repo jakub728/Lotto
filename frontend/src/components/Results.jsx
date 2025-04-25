@@ -8,7 +8,9 @@ export default function Results() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("https://lotto-backend-pfhh.onrender.com");
+        const response = await fetch(
+          "https://lotto-backend-pfhh.onrender.com/api/lottery-results"
+        );
         if (!response.ok) {
           throw new Error(`Could not fetch data: ${response.status}`);
         }
@@ -70,7 +72,7 @@ export default function Results() {
 
       {lastFiveSorted.map((element) => (
         <div key={element.dateId} className="results-div">
-          <p style={{ color: "black" }}>NR:{element.dateId}</p>
+          <p style={{ color: "black" }}></p>
           <p>{element.date}</p>
 
           {element.five.map((e, index) => (

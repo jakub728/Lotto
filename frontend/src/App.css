@@ -8,6 +8,12 @@
 header {
   background-color: #0f100e;
   width: 100vw;
+
+  h1 {
+    color: white;
+    margin: 0;
+    text-align: center;
+  }
 }
 
 .menu-wrapper {
@@ -45,6 +51,12 @@ header {
   transform: translateY(-1px);
 }
 /*  */
+
+.small {
+  /* display: none; */
+  position: fixed;
+  top: 0;
+}
 
 /* home */
 .home {
