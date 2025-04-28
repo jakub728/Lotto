@@ -1,9 +1,12 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { DataContext } from "../context/Context";
 
 export default function Results() {
   const { data, setData, lastResults, setLastResults } =
     useContext(DataContext);
+
+  const [toggle, setToggle] = useState(false);
+  const [none, setNone] = useState("MORE");
 
   useEffect(() => {
     async function fetchData() {
@@ -51,8 +54,8 @@ export default function Results() {
     newTwo = newTwo.sort((a, b) => a - b);
 
     if (!isExisting) {
-      setLastResults((prev) => [
-        ...prev,
+      setLastResults([
+        ...lastResults,
         {
           date: newDate,
           dateId: id,
@@ -62,6 +65,8 @@ export default function Results() {
       ]);
     }
   }, [data]);
+
+  console.log(lastResults);
 
   const lastFiveSorted = [...lastResults]
     .sort((a, b) => b.dateId - a.dateId)
@@ -74,20 +79,45 @@ export default function Results() {
         src="/eurojackpot-logo-vector-removebg-preview.png"
         alt="lotto"
       />
+      {toggle
+        ? lastResults
+            .sort((a, b) => b.dateId - a.dateId)
+            .map((element) => (
+              <div key={element.dateId} className="results-div">
+                <p style={{ color: "black" }}></p>
+                <p>{element.date}</p>
 
-      {lastFiveSorted.map((element) => (
-        <div key={element.dateId} className="results-div">
-          <p style={{ color: "black" }}></p>
-          <p>{element.date}</p>
+                {element.five.map((e, index) => (
+                  <div key={index}>{e}</div>
+                ))}
+                {element.two.map((e, index) => (
+                  <div key={index}>{e}</div>
+                ))}
+              </div>
+            ))
+        : lastFiveSorted.map((element) => (
+            <div key={element.dateId} className="results-div">
+              <p style={{ color: "black" }}></p>
+              <p>{element.date}</p>
 
-          {element.five.map((e, index) => (
-            <div key={index}>{e}</div>
+              {element.five.map((e, index) => (
+                <div key={index}>{e}</div>
+              ))}
+              {element.two.map((e, index) => (
+                <div key={index}>{e}</div>
+              ))}
+            </div>
           ))}
-          {element.two.map((e, index) => (
-            <div key={index}>{e}</div>
-          ))}
-        </div>
-      ))}
+
+      <button
+        style={{ display: "block", margin: "auto" }}
+        onClick={() => {
+          setNone("LESS");
+          setToggle(!toggle);
+        }}
+      >
+        {none}
+      </button>
     </div>
   );
 }
