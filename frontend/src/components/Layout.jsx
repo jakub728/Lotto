@@ -41,19 +41,43 @@ export default function Layout() {
         </h1>
         {view ? (
           <div className="menu-wrapper">
-            <NavLink className="menu" to="/">
+            <NavLink
+              className="menu"
+              to="/"
+              onClick={() => {
+                setView(!view);
+              }}
+            >
               Home
             </NavLink>
 
-            <NavLink className="menu" to="/results">
+            <NavLink
+              className="menu"
+              to="/results"
+              onClick={() => {
+                setView(!view);
+              }}
+            >
               Results
             </NavLink>
 
-            <NavLink className="menu" to="/generate">
+            <NavLink
+              className="menu"
+              to="/generate"
+              onClick={() => {
+                setView(!view);
+              }}
+            >
               Generate
             </NavLink>
 
-            <NavLink className="menu" to="/login">
+            <NavLink
+              className="menu"
+              to="/login"
+              onClick={() => {
+                setView(!view);
+              }}
+            >
               Login
             </NavLink>
           </div>

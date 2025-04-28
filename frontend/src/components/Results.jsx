@@ -6,7 +6,14 @@ export default function Results() {
     useContext(DataContext);
 
   const [toggle, setToggle] = useState(false);
-  const [none, setNone] = useState("MORE");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const storedResults = localStorage.getItem("lastResults");
+    if (storedResults) {
+      setLastResults(JSON.parse(storedResults));
+    }
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -22,6 +29,8 @@ export default function Results() {
         setData(result);
       } catch (error) {
         console.error("Fetch error:", error);
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -37,7 +46,7 @@ export default function Results() {
   }, [setData]);
 
   useEffect(() => {
-    if (!data || !data[1]) return;
+    if (loading || !data || !data[1]) return;
 
     let newDate = `${data[1].drawDate.slice(8, 10)}.${data[1].drawDate.slice(
       5,
@@ -54,7 +63,7 @@ export default function Results() {
     newTwo = newTwo.sort((a, b) => a - b);
 
     if (!isExisting) {
-      setLastResults([
+      const updatedResults = [
         ...lastResults,
         {
           date: newDate,
@@ -62,15 +71,18 @@ export default function Results() {
           five: newFive,
           two: newTwo,
         },
-      ]);
-    }
-  }, [data]);
+      ];
 
-  console.log(lastResults);
+      setLastResults(updatedResults);
+      localStorage.setItem("lastResults", JSON.stringify(updatedResults));
+    }
+  }, [data, loading, lastResults]);
 
   const lastFiveSorted = [...lastResults]
     .sort((a, b) => b.dateId - a.dateId)
     .slice(0, 5);
+
+
 
   return (
     <div className="results">
@@ -112,11 +124,10 @@ export default function Results() {
       <button
         style={{ display: "block", margin: "auto" }}
         onClick={() => {
-          setNone("LESS");
           setToggle(!toggle);
         }}
       >
-        {none}
+        {toggle ? "LESS" : "MORE"}
       </button>
     </div>
   );
