@@ -11,64 +11,6 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// app.get("/api/results", (req, res) => {
-//   fs.readFile(resultsPath, "utf8", (err, data) => {
-//     if (err) return res.status(500).json({ error: "Failed to read results" });
-//     res.json(JSON.parse(data));
-//   });
-// });
-
-// // POST new result
-// app.post("/api/results", (req, res) => {
-//   const newResult = req.body;
-
-//   fs.readFile(resultsPath, "utf8", (err, data) => {
-//     if (err) return res.status(500).json({ error: "Read error" });
-
-//     let results = JSON.parse(data);
-//     const exists = results.some((r) => r.dateId === newResult.dateId);
-
-//     if (exists) {
-//       return res.status(409).json({ message: "Result already exists" });
-//     }
-
-//     results.push(newResult);
-
-//     fs.writeFile(resultsPath, JSON.stringify(results, null, 2), (err) => {
-//       if (err) return res.status(500).json({ error: "Write error" });
-//       res.status(201).json({ message: "Result saved" });
-//     });
-//   });
-// });
-
-// app.get("/api/lottery-results", async (req, res) => {
-//   const options = {
-//     method: "GET",
-//     headers: {
-//       Accept: "application/json",
-//       secret: "FpOf7GpFJIXoDpIuMsuUnTztmYC3QHVG4dLi5FOF+wo=",
-//     },
-//   };
-
-//   const gameType = "EuroJackpot";
-//   const url = new URL(
-//     "https://developers.lotto.pl/api/open/v1/lotteries/draw-results/last-results/"
-//   );
-//   url.searchParams.append("gameType", gameType);
-
-//   try {
-//     const response = await fetch(url, options);
-//     if (!response.ok) {
-//       throw new Error(`Could not fetch data: ${response.status}`);
-//     }
-//     const result = await response.json();
-//     res.json(result); // Przekazujemy dane z zewnętrznego API do klienta (frontend)
-//   } catch (error) {
-//     console.error("Fetch error:", error);
-//     res.status(500).json({ error: "Failed to fetch lottery data" });
-//   }
-// });
-
 app.get("/api/results", async (req, res) => {
   const options = {
     method: "GET",
