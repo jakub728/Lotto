@@ -101,7 +101,7 @@ let resultArr = [
     date: "26.11.2024",
     dateId: 516,
     five: [20, 21, 28, 32, 37],
-    two: [],
+    two: [1, 5],
   },
 
   {

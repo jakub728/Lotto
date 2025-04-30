@@ -97,7 +97,7 @@ export default function Generate() {
     <div className="generate">
       <form action="">
         <h2>OPTIONS</h2>
-        
+
         <div className="option">
           <input
             type="checkbox"
@@ -111,7 +111,7 @@ export default function Generate() {
             <p>(bez ostatnich cyfr z (n) liczby losowań)</p>
           </label>
           {lastResults ? (
-            <>
+            <div className="select">
               <label htmlFor="">5 of 50</label>
               <select
                 name=""
@@ -119,6 +119,7 @@ export default function Generate() {
                 value={input1}
                 onChange={(e) => setInput1(e.target.value)}
               >
+                <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -129,20 +130,14 @@ export default function Generate() {
 
               <label htmlFor="">2 of 12</label>
               <select name="" id="">
+                <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
               </select>
-            </>
+            </div>
           ) : null}
         </div>
-        <hr />
-        <div className="option">
-          <input type="checkbox" />
-          <label htmlFor="">
-            Without (n) numbers, one after another: 1,2,3 / (n)=3
-            <p>(bez liczb występujących jedna po drugiej (n) to ilość cyfr)</p>
-          </label>
-        </div>
+
         <div className="buttons">
           <button
             onClick={(e) => {

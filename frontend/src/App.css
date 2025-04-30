@@ -39,7 +39,7 @@ header {
 
   max-width: 100px;
   width: 100%;
-  color: #acca1a;
+  color: #97998e;
   border: none;
   transition: all 0.3s ease 0s;
   cursor: pointer;
@@ -171,6 +171,23 @@ header {
   margin: auto;
 }
 
+.select {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: auto;
+}
+.select label {
+  margin-top: 1rem;
+}
+
+.select select {
+  width: 25%;
+  margin: auto;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
 @media (max-width: 430px) {
   body {
     overflow-x: hidden;
@@ -228,6 +245,10 @@ header {
   .menu {
     border-bottom: 1px solid white;
   }
+  .menu:nth-last-child(1) {
+    border-bottom: none;
+  }
+
   .results-wrapper {
     max-width: 600px;
     width: 100vw;
@@ -268,8 +289,8 @@ header {
   }
 
   .results-div div {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -283,8 +304,8 @@ header {
   }
   .results-div div:nth-last-child(1),
   .results-div div:nth-last-child(2) {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     display: flex;
     align-items: center;
     justify-content: center;
