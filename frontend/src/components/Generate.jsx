@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "../App.css";
 import "../style/Generate.css";
 import Chance from "chance";
-import resultArr from "../context/resultArr";
 
 const chance = new Chance();
 
@@ -10,7 +9,7 @@ export default function Generate() {
   const [numbers, setNumbers] = useState([]);
 
   // states of generation
-  const [lastResults, setLastResults] = useState(false);
+
   //
   const [input1, setInput1] = useState(0);
   const [input2, setInput2] = useState(0);

@@ -2,8 +2,7 @@ import { useEffect, useContext, useState } from "react";
 import { DataContext } from "../context/Context";
 
 export default function Results() {
-  const { data, setData, lastResults, setLastResults } =
-    useContext(DataContext);
+  const { data, setData } = useContext(DataContext);
 
   const [toggle, setToggle] = useState(false);
 
@@ -28,8 +27,6 @@ export default function Results() {
 
     return () => clearInterval(interval);
   }, [setData]);
-
-  console.log(data);
 
   return (
     <div className="results">
