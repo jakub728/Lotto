@@ -40,7 +40,7 @@ export default function Layout() {
           />
         </h1>
         {view ? (
-          <div className="menu-wrapper">
+          <div className={`menu-wrapper ${view ? `open` : ``}`}>
             <NavLink
               className="menu"
               to="/"

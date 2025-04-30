@@ -1,5 +1,5 @@
 form {
-  background-color: rgb(121, 120, 120);
+  background-color: #912b15;
   max-width: 800px;
   width: 80vw;
   padding: 1rem;
@@ -16,13 +16,12 @@ h2 {
   color: white;
 }
 hr {
-  color: white;
   max-width: 400px;
   width: 100%;
 }
 
 label {
-  color: white;
+  color: black;
 }
 label p {
   font-style: italic;
@@ -52,13 +51,24 @@ label p {
   height: 100%;
   text-align: center;
   border-radius: 20px;
+}
+
+.five {
+  background-color: white;
+  color: black;
+}
+
+.two {
   background-color: black;
   color: white;
 }
 
-.generate-2 div:nth-child(7),
-.generate-2 div:nth-child(8),
-.generate-2 div:nth-child(9) {
+.option {
   background-color: white;
-  color: black;
+  border-radius: 5px;
+  padding: 0.5rem;
+}
+
+.buttons {
+  display: flex;
 }

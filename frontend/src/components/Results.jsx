@@ -5,15 +5,27 @@ export default function Results() {
   const { data, setData, lastResults, setLastResults } =
     useContext(DataContext);
 
-  const [toggle, setToggle] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isClearing, setIsClearing] = useState(false);
+  const [toggle, setToggle] = useState(false);
+
+  // useEffect(() => {
+  //   const storedResults = localStorage.getItem("lastResults");
+  //   if (storedResults) {
+  //     setLastResults(JSON.parse(storedResults));
+  //   }
+  // }, []);
 
   useEffect(() => {
-    const storedResults = localStorage.getItem("lastResults");
-    if (storedResults) {
-      setLastResults(JSON.parse(storedResults));
-    }
-  }, []);
+    localStorage.setItem("lastResults", JSON.stringify(lastResults));
+  }, [lastResults]);
+
+  const clearLastResults = () => {
+    setIsClearing(true);
+    setLastResults([]);
+    localStorage.removeItem("lastResults");
+    setTimeout(() => setIsClearing(false), 100);
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -25,7 +37,6 @@ export default function Results() {
           throw new Error(`Could not fetch data: ${response.status}`);
         }
         const result = await response.json();
-
         setData(result);
       } catch (error) {
         console.error("Fetch error:", error);
@@ -35,33 +46,24 @@ export default function Results() {
     }
 
     fetchData();
+    const interval = setInterval(fetchData, 60000);
 
-    const interval = setInterval(() => {
-      fetchData();
-    }, 60000);
-
-    return () => {
-      clearInterval(interval);
-    };
+    return () => clearInterval(interval);
   }, [setData]);
 
   useEffect(() => {
-    if (loading || !data || !data[1]) return;
+    if (loading || !data || !data[1] || isClearing) return;
 
-    let newDate = `${data[1].drawDate.slice(8, 10)}.${data[1].drawDate.slice(
+    const draw = data[1];
+    const id = draw.drawSystemId;
+    const newDate = `${draw.drawDate.slice(8, 10)}.${draw.drawDate.slice(
       5,
       7
-    )}.${data[1].drawDate.slice(0, 4)}`;
-
-    let id = data[1].drawSystemId;
+    )}.${draw.drawDate.slice(0, 4)}`;
+    const newFive = [...draw.results[0].resultsJson].sort((a, b) => a - b);
+    const newTwo = [...draw.results[0].specialResults].sort((a, b) => a - b);
 
     const isExisting = lastResults.some((result) => result.dateId === id);
-
-    let newFive = data[1].results[0].resultsJson;
-    newFive = newFive.sort((a, b) => a - b);
-    let newTwo = data[1].results[0].specialResults;
-    newTwo = newTwo.sort((a, b) => a - b);
-
     if (!isExisting) {
       const updatedResults = [
         ...lastResults,
@@ -72,17 +74,13 @@ export default function Results() {
           two: newTwo,
         },
       ];
-
       setLastResults(updatedResults);
-      localStorage.setItem("lastResults", JSON.stringify(updatedResults));
     }
-  }, [data, loading, lastResults]);
+  }, [data, loading, lastResults, isClearing]);
 
   const lastFiveSorted = [...lastResults]
     .sort((a, b) => b.dateId - a.dateId)
     .slice(0, 5);
-
-
 
   return (
     <div className="results">
@@ -122,13 +120,14 @@ export default function Results() {
           ))}
 
       <button
-        style={{ display: "block", margin: "auto" }}
+        style={{ display: "block", margin: "auto", marginBottom: "1rem" }}
         onClick={() => {
           setToggle(!toggle);
         }}
       >
         {toggle ? "LESS" : "MORE"}
       </button>
+      <button onClick={clearLastResults}>Clear History</button>
     </div>
   );
 }
