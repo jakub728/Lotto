@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "../App.css";
 import "../style/Generate.css";
 import Chance from "chance";
+import { DataContext } from "../context/Context";
 
 const chance = new Chance();
 
 export default function Generate() {
   const [numbers, setNumbers] = useState([]);
+  const { data } = useContext(DataContext);
 
   // states of generation
 
-  //
   const [input1, setInput1] = useState(0);
   const [input2, setInput2] = useState(0);
 
@@ -98,18 +99,12 @@ export default function Generate() {
         <h2>OPTIONS</h2>
 
         <div className="option">
-          <input
-            type="checkbox"
-            checked={lastResults}
-            onChange={(e) => {
-              setLastResults(e.target.checked);
-            }}
-          />
+          <input type="checkbox" />
           <label htmlFor="">
             Without last numbers from (n) number of result
             <p>(bez ostatnich cyfr z (n) liczby losowań)</p>
           </label>
-          {lastResults ? (
+          {data ? (
             <div className="select">
               <label htmlFor="">5 of 50</label>
               <select
