@@ -14,7 +14,7 @@ export default function Generate() {
       max: 50,
     });
     console.log(generated5from50.sort((a, b) => a - b));
-    const generated2from12 = chance.unique(chance.integer, 2, {
+    const generated2from12 = chance.unique(chance.integer, 3, {
       min: 1,
       max: 12,
     });

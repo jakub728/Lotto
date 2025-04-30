@@ -1,3 +1,7 @@
+html {
+  background-color: #d6c25e;
+}
+
 :root {
   box-sizing: border-box;
   margin: 0;
@@ -151,7 +155,7 @@ header {
 
 @media (max-width: 430px) {
   body {
-    overflow: hidden;
+    overflow-x: hidden;
   }
   .big {
     display: none;
@@ -177,6 +181,9 @@ header {
     }
   }
 
+  .results {
+    height: auto;
+  }
   .menu-wrapper {
     position: absolute;
     right: 0;
