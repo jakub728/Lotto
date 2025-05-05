@@ -95,6 +95,11 @@ label p {
   border-radius: 5px;
 }
 
+#input3,
+#input4 {
+  width: 100px;
+}
+
 @media (max-width: 430px) {
   .select {
     position: static;

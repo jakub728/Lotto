@@ -8,7 +8,29 @@ const chance = new Chance();
 
 export default function Generate() {
   const [numbers, setNumbers] = useState([]);
-  const { data } = useContext(DataContext);
+  const { data, setData } = useContext(DataContext);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(
+          "https://lotto-backend-pfhh.onrender.com/api/results"
+        );
+        if (!response.ok) {
+          throw new Error(`Could not fetch data: ${response.status}`);
+        }
+        const result = await response.json();
+        setData(result);
+      } catch (error) {
+        console.error("Fetch error:", error);
+      }
+    }
+
+    fetchData();
+    const interval = setInterval(fetchData, 60000);
+
+    return () => clearInterval(interval);
+  }, [setData]);
 
   // checkbox 1
   const [checkbox1, setCheckbox1] = useState(false);
@@ -17,39 +39,10 @@ export default function Generate() {
 
   // checkbox 2
   const [checkbox2, setCheckbox2] = useState(false);
-  const [input3, setInput3] = useState(0);
-  const [input4, setInput4] = useState(0);
+  const [input3, setInput3] = useState(5);
+  const [input4, setInput4] = useState(2);
 
   function generatingArrays() {
-    //! funkcja bez ostatnich losowan 5 z 50
-    function withoutLastResults5(input1) {
-      const last = resultArr.slice(input1);
-
-      const allFives = new Set();
-
-      last.forEach((draw) => {
-        draw.five.forEach((num) => allFives.add(num));
-      });
-
-      return {
-        uniqueFive: Array.from(allFives).sort((a, b) => a - b),
-      };
-    }
-    //! funkcja bez ostatnich losowan 1 z 12
-    function withoutLastResults2(input2) {
-      const last = numbers.slice(input2);
-
-      const allTwos = new Set();
-
-      last.forEach((draw) => {
-        draw.two.forEach((num) => allTwos.add(num));
-      });
-
-      return {
-        uniqueTwo: Array.from(allTwos).sort((a, b) => a - b),
-      };
-    }
-
     //! liczby pod rzad np. 1,2,3
     function hasSequentialNumbers(arr, length = 3) {
       let count = 1;
@@ -64,30 +57,39 @@ export default function Generate() {
       return false;
     }
 
+    const count50 = checkbox2 ? input3 : 5;
+    const count12 = checkbox2 ? input4 : 2;
+
     let valid = false;
     let generated5from50;
+    let pool12 = Array.from({ length: 12 }, (_, i) => i + 1);
     while (!valid) {
-      generated5from50 = chance
-        .unique(chance.integer, 5, {
-          min: 1,
-          max: 50,
-        })
-        .sort((a, b) => a - b);
+      let pool = Array.from({ length: 50 }, (_, i) => i + 1);
+
+      if (checkbox1 && data.length > 0) {
+        const recent = data.slice(-input1);
+        const exclude = recent.flatMap((d) => [...d.five]);
+        pool = pool.filter((n) => !exclude.includes(n));
+      }
+
+      if (checkbox1 && data.length > 0) {
+        const recent2 = data.slice(-input2);
+        const exclude2 = recent2.flatMap((d) => [...d.two]);
+        pool12 = pool12.filter((n) => !exclude2.includes(n));
+      }
+
+      if (pool.length < input1) break;
+
+      generated5from50 = chance.pickset(pool, count50).sort((a, b) => a - b);
 
       if (!hasSequentialNumbers(generated5from50, 3)) {
         valid = true;
       }
     }
 
-    console.log(generated5from50.sort((a, b) => a - b));
     const generated2from12 = chance
-      .unique(chance.integer, 2, {
-        min: 1,
-        max: 12,
-      })
+      .pickset(pool12, count12)
       .sort((a, b) => a - b);
-
-    console.log(generated2from12.sort((a, b) => a - b));
 
     setNumbers((prev) => [
       ...prev,
@@ -121,7 +123,7 @@ export default function Generate() {
                 name="input1"
                 id="input1"
                 value={input1}
-                onChange={(e) => setInput1(e.target.value)}
+                onChange={(e) => setInput1(Number(e.target.value))}
               >
                 <option value="0">0</option>
                 <option value="1">1</option>
@@ -137,7 +139,7 @@ export default function Generate() {
                 name="input2"
                 id="input2"
                 value={input2}
-                onChange={(e) => setInput2(e.target.value)}
+                onChange={(e) => setInput2(Number(e.target.value))}
               >
                 <option value="0">0</option>
                 <option value="1">1</option>
@@ -158,10 +160,10 @@ export default function Generate() {
             Generate with system{"   "}
             {checkbox2 ? (
               <select
-                name="input1"
-                id="input1"
-                value={input1}
-                onChange={(e) => setInput1(e.target.value)}
+                name="input3"
+                id="input3"
+                value={input3}
+                onChange={(e) => setInput3(Number(e.target.value))}
               >
                 <option value="5" defaultValue={5}>
                   5
@@ -175,10 +177,10 @@ export default function Generate() {
             {"   "}of 50{" and "}
             {checkbox2 ? (
               <select
-                name="input2"
-                id="input2"
-                value={input2}
-                onChange={(e) => setInput2(e.target.value)}
+                name="input4"
+                id="input4"
+                value={input4}
+                onChange={(e) => setInput4(Number(e.target.value))}
               >
                 <option value="2" defaultValue={2}>
                   2
@@ -191,6 +193,12 @@ export default function Generate() {
             )}
             {"   "}of 12
             <p>(generuj liczby systemem)</p>
+          </label>
+        </div>
+        <div className="option">
+          <label htmlFor="">
+            * default without 3 or more numbers in row ex. 25, 26, 27..
+            <p>(domyślnie bez 3 lub wiecej liczb pod rząd np. 25, 26, 27)</p>
           </label>
         </div>
         <div className="buttons">

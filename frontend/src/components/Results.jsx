@@ -35,7 +35,7 @@ export default function Results() {
         src="/eurojackpot-logo-vector-removebg-preview.png"
         alt="lotto"
       />
-      {data ? (
+      {data.length > 0 ? (
         toggle ? (
           data.reverse().map((element) => (
             <div key={element.dateId} className="results-div">
