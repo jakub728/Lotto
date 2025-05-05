@@ -25,8 +25,8 @@ export default function Layout() {
             Generate
           </NavLink>
 
-          <NavLink className="menu" to="/login">
-            Login
+          <NavLink className="menu" to="/data">
+            Saved 
           </NavLink>
         </div>
       </header>

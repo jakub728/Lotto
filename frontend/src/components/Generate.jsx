@@ -3,6 +3,7 @@ import "../App.css";
 import "../style/Generate.css";
 import Chance from "chance";
 import { DataContext } from "../context/Context";
+import { v4 as unique } from "uuid";
 
 const chance = new Chance();
 
@@ -72,11 +73,32 @@ export default function Generate() {
     setNumbers((prev) => [
       ...prev,
       {
+        id: unique(),
         five: generated5from50,
         two: generated2from12,
       },
     ]);
   }
+
+  function handleSave(element) {
+    const currentDate = new Date();
+
+    const withDate = {
+      ...element,
+      date:
+        currentDate.getDate().toString().padStart(2, "0") +
+        "-" +
+        (currentDate.getMonth() + 1).toString().padStart(2, "0") +
+        "-" +
+        currentDate.getFullYear().toString().slice(2),
+      time:
+        currentDate.getHours().toString().padStart(2, "0") +
+        ":" +
+        currentDate.getMinutes().toString().padStart(2, "0"),
+    };
+    localStorage.setItem(`numbers-${element.id}`, JSON.stringify(withDate));
+  }
+  console.log(numbers);
 
   return (
     <div>
@@ -113,7 +135,6 @@ export default function Generate() {
                     <option value="5">5</option>
                     <option value="6">6</option>
                   </select>
-
                   <label htmlFor="">2 of 12</label>
                   <select
                     name="input2"
@@ -204,18 +225,27 @@ export default function Generate() {
           </form>
           <div className="generate-1">
             {numbers
-              ? numbers.map((element, index) => (
-                  <div key={index} className="generate-2">
-                    {element.five.map((e, index) => (
-                      <div className="five" key={index}>
-                        {e}
-                      </div>
-                    ))}
-                    {element.two.map((e, index) => (
-                      <div className="two" key={index}>
-                        {e}
-                      </div>
-                    ))}
+              ? numbers.map((element) => (
+                  <div className="generate-1-5">
+                    <div className="generate-2">
+                      {element.five.map((e, index) => (
+                        <div className="five" key={index}>
+                          {e}
+                        </div>
+                      ))}
+                      {element.two.map((e, index) => (
+                        <div className="two" key={index}>
+                          {e}
+                        </div>
+                      ))}
+                    </div>
+                    <button
+                      key={element.id}
+                      onClick={() => handleSave(element)}
+                      className="green-button"
+                    >
+                      Save
+                    </button>
                   </div>
                 ))
               : null}
