@@ -10,10 +10,15 @@ export default function Generate() {
   const [numbers, setNumbers] = useState([]);
   const { data } = useContext(DataContext);
 
-  // states of generation
-
+  // checkbox 1
+  const [checkbox1, setCheckbox1] = useState(false);
   const [input1, setInput1] = useState(0);
   const [input2, setInput2] = useState(0);
+
+  // checkbox 2
+  const [checkbox2, setCheckbox2] = useState(false);
+  const [input3, setInput3] = useState(0);
+  const [input4, setInput4] = useState(0);
 
   function generatingArrays() {
     //! funkcja bez ostatnich losowan 5 z 50
@@ -98,18 +103,23 @@ export default function Generate() {
       <form action="">
         <h2>OPTIONS</h2>
 
+        {/* OPTION 1 */}
         <div className="option">
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            checked={checkbox1}
+            onChange={() => setCheckbox1(!checkbox1)}
+          />
           <label htmlFor="">
             Without last numbers from (n) number of result
             <p>(bez ostatnich cyfr z (n) liczby losowań)</p>
           </label>
-          {data ? (
+          {checkbox1 ? (
             <div className="select">
-              <label htmlFor="">5 of 50</label>
+              <label>5 of 50</label>
               <select
-                name=""
-                id=""
+                name="input1"
+                id="input1"
                 value={input1}
                 onChange={(e) => setInput1(e.target.value)}
               >
@@ -123,7 +133,12 @@ export default function Generate() {
               </select>
 
               <label htmlFor="">2 of 12</label>
-              <select name="" id="">
+              <select
+                name="input2"
+                id="input2"
+                value={input2}
+                onChange={(e) => setInput2(e.target.value)}
+              >
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -132,6 +147,52 @@ export default function Generate() {
           ) : null}
         </div>
 
+        {/* OPTION 2 */}
+        <div className="option">
+          <input
+            type="checkbox"
+            checked={checkbox2}
+            onChange={() => setCheckbox2(!checkbox2)}
+          />
+          <label htmlFor="">
+            Generate with system{"   "}
+            {checkbox2 ? (
+              <select
+                name="input1"
+                id="input1"
+                value={input1}
+                onChange={(e) => setInput1(e.target.value)}
+              >
+                <option value="5" defaultValue={5}>
+                  5
+                </option>
+                <option value="6">6</option>
+                <option value="6">7</option>
+              </select>
+            ) : (
+              5
+            )}
+            {"   "}of 50{" and "}
+            {checkbox2 ? (
+              <select
+                name="input2"
+                id="input2"
+                value={input2}
+                onChange={(e) => setInput2(e.target.value)}
+              >
+                <option value="2" defaultValue={2}>
+                  2
+                </option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            ) : (
+              2
+            )}
+            {"   "}of 12
+            <p>(generuj liczby systemem)</p>
+          </label>
+        </div>
         <div className="buttons">
           <button
             onClick={(e) => {

@@ -35,9 +35,26 @@ export default function Results() {
         src="/eurojackpot-logo-vector-removebg-preview.png"
         alt="lotto"
       />
-      {data
-        ? toggle
-          ? data.reverse().map((element) => (
+      {data ? (
+        toggle ? (
+          data.reverse().map((element) => (
+            <div key={element.dateId} className="results-div">
+              <p style={{ color: "black" }}></p>
+              <p>{element.date}</p>
+
+              {element.five.map((e, index) => (
+                <div key={index}>{e}</div>
+              ))}
+              {element.two.map((e, index) => (
+                <div key={index}>{e}</div>
+              ))}
+            </div>
+          ))
+        ) : (
+          data
+            .slice(-5)
+            .reverse()
+            .map((element) => (
               <div key={element.dateId} className="results-div">
                 <p style={{ color: "black" }}></p>
                 <p>{element.date}</p>
@@ -50,23 +67,10 @@ export default function Results() {
                 ))}
               </div>
             ))
-          : data
-              .slice(-5)
-              .reverse()
-              .map((element) => (
-                <div key={element.dateId} className="results-div">
-                  <p style={{ color: "black" }}></p>
-                  <p>{element.date}</p>
-
-                  {element.five.map((e, index) => (
-                    <div key={index}>{e}</div>
-                  ))}
-                  {element.two.map((e, index) => (
-                    <div key={index}>{e}</div>
-                  ))}
-                </div>
-              ))
-        : "wait"}
+        )
+      ) : (
+        <img src="7471270.png" className="spinner" />
+      )}
 
       <button
         style={{ display: "block", margin: "auto", marginBottom: "1rem" }}
