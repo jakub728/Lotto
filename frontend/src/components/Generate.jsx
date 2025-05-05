@@ -8,29 +8,7 @@ const chance = new Chance();
 
 export default function Generate() {
   const [numbers, setNumbers] = useState([]);
-  const { data, setData } = useContext(DataContext);
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch(
-          "https://lotto-backend-pfhh.onrender.com/api/results"
-        );
-        if (!response.ok) {
-          throw new Error(`Could not fetch data: ${response.status}`);
-        }
-        const result = await response.json();
-        setData(result);
-      } catch (error) {
-        console.error("Fetch error:", error);
-      }
-    }
-
-    fetchData();
-    const interval = setInterval(fetchData, 60000);
-
-    return () => clearInterval(interval);
-  }, [setData]);
+  const { data } = useContext(DataContext);
 
   // checkbox 1
   const [checkbox1, setCheckbox1] = useState(false);
@@ -62,10 +40,10 @@ export default function Generate() {
 
     let valid = false;
     let generated5from50;
+    let pool = Array.from({ length: 50 }, (_, i) => i + 1);
     let pool12 = Array.from({ length: 12 }, (_, i) => i + 1);
-    while (!valid) {
-      let pool = Array.from({ length: 50 }, (_, i) => i + 1);
 
+    while (!valid) {
       if (checkbox1 && data.length > 0) {
         const recent = data.slice(-input1);
         const exclude = recent.flatMap((d) => [...d.five]);
@@ -101,143 +79,151 @@ export default function Generate() {
   }
 
   return (
-    <div className="generate">
-      <form action="">
-        <h2>OPTIONS</h2>
+    <div>
+      {data ? (
+        <div className="generate">
+          <form action="">
+            <h2>OPTIONS</h2>
 
-        {/* OPTION 1 */}
-        <div className="option">
-          <input
-            type="checkbox"
-            checked={checkbox1}
-            onChange={() => setCheckbox1(!checkbox1)}
-          />
-          <label htmlFor="">
-            Without last numbers from (n) number of result
-            <p>(bez ostatnich cyfr z (n) liczby losowań)</p>
-          </label>
-          {checkbox1 ? (
-            <div className="select">
-              <label>5 of 50</label>
-              <select
-                name="input1"
-                id="input1"
-                value={input1}
-                onChange={(e) => setInput1(Number(e.target.value))}
-              >
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-              </select>
+            {/* OPTION 1 */}
+            <div className="option">
+              <input
+                type="checkbox"
+                checked={checkbox1}
+                onChange={() => setCheckbox1(!checkbox1)}
+              />
+              <label htmlFor="">
+                Without last numbers from (n) number of result
+                <p>(bez ostatnich cyfr z (n) liczby losowań)</p>
+              </label>
+              {checkbox1 ? (
+                <div className="select">
+                  <label>5 of 50</label>
+                  <select
+                    name="input1"
+                    id="input1"
+                    value={input1}
+                    onChange={(e) => setInput1(Number(e.target.value))}
+                  >
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                  </select>
 
-              <label htmlFor="">2 of 12</label>
-              <select
-                name="input2"
-                id="input2"
-                value={input2}
-                onChange={(e) => setInput2(Number(e.target.value))}
-              >
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-              </select>
+                  <label htmlFor="">2 of 12</label>
+                  <select
+                    name="input2"
+                    id="input2"
+                    value={input2}
+                    onChange={(e) => setInput2(Number(e.target.value))}
+                  >
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                  </select>
+                </div>
+              ) : null}
             </div>
-          ) : null}
-        </div>
 
-        {/* OPTION 2 */}
-        <div className="option">
-          <input
-            type="checkbox"
-            checked={checkbox2}
-            onChange={() => setCheckbox2(!checkbox2)}
-          />
-          <label htmlFor="">
-            Generate with system{"   "}
-            {checkbox2 ? (
-              <select
-                name="input3"
-                id="input3"
-                value={input3}
-                onChange={(e) => setInput3(Number(e.target.value))}
-              >
-                <option value="5" defaultValue={5}>
+            {/* OPTION 2 */}
+            <div className="option">
+              <input
+                type="checkbox"
+                checked={checkbox2}
+                onChange={() => setCheckbox2(!checkbox2)}
+              />
+              <label htmlFor="">
+                Generate with system{"   "}
+                {checkbox2 ? (
+                  <select
+                    name="input3"
+                    id="input3"
+                    value={input3}
+                    onChange={(e) => setInput3(Number(e.target.value))}
+                  >
+                    <option value="5" defaultValue={5}>
+                      5
+                    </option>
+                    <option value="6">6</option>
+                    <option value="6">7</option>
+                  </select>
+                ) : (
                   5
-                </option>
-                <option value="6">6</option>
-                <option value="6">7</option>
-              </select>
-            ) : (
-              5
-            )}
-            {"   "}of 50{" and "}
-            {checkbox2 ? (
-              <select
-                name="input4"
-                id="input4"
-                value={input4}
-                onChange={(e) => setInput4(Number(e.target.value))}
-              >
-                <option value="2" defaultValue={2}>
+                )}
+                {"   "}of 50{" and "}
+                {checkbox2 ? (
+                  <select
+                    name="input4"
+                    id="input4"
+                    value={input4}
+                    onChange={(e) => setInput4(Number(e.target.value))}
+                  >
+                    <option value="2" defaultValue={2}>
+                      2
+                    </option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                ) : (
                   2
-                </option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-            ) : (
-              2
-            )}
-            {"   "}of 12
-            <p>(generuj liczby systemem)</p>
-          </label>
-        </div>
-        <div className="option">
-          <label htmlFor="">
-            * default without 3 or more numbers in row ex. 25, 26, 27..
-            <p>(domyślnie bez 3 lub wiecej liczb pod rząd np. 25, 26, 27)</p>
-          </label>
-        </div>
-        <div className="buttons">
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              generatingArrays();
-            }}
-          >
-            Generate
-          </button>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              setNumbers([]);
-            }}
-          >
-            Reset
-          </button>
-        </div>
-      </form>
-      <div className="generate-1">
-        {numbers
-          ? numbers.map((element, index) => (
-              <div key={index} className="generate-2">
-                {element.five.map((e, index) => (
-                  <div className="five" key={index}>
-                    {e}
+                )}
+                {"   "}of 12
+                <p>(generuj liczby systemem)</p>
+              </label>
+            </div>
+            <div className="option">
+              <label htmlFor="">
+                * default without 3 or more numbers in row ex. 25, 26, 27..
+                <p>
+                  (domyślnie bez 3 lub wiecej liczb pod rząd np. 25, 26, 27)
+                </p>
+              </label>
+            </div>
+            <div className="buttons">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  generatingArrays();
+                }}
+              >
+                Generate
+              </button>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setNumbers([]);
+                }}
+              >
+                Reset
+              </button>
+            </div>
+          </form>
+          <div className="generate-1">
+            {numbers
+              ? numbers.map((element, index) => (
+                  <div key={index} className="generate-2">
+                    {element.five.map((e, index) => (
+                      <div className="five" key={index}>
+                        {e}
+                      </div>
+                    ))}
+                    {element.two.map((e, index) => (
+                      <div className="two" key={index}>
+                        {e}
+                      </div>
+                    ))}
                   </div>
-                ))}
-                {element.two.map((e, index) => (
-                  <div className="two" key={index}>
-                    {e}
-                  </div>
-                ))}
-              </div>
-            ))
-          : null}
-      </div>
+                ))
+              : null}
+          </div>
+        </div>
+      ) : (
+        <img src="7471270.png" className="spinner" />
+      )}
     </div>
   );
 }
