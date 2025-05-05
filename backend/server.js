@@ -37,7 +37,7 @@ app.get("/api/results", async (req, res) => {
     const newDate = `${draw.drawDate.slice(8, 10)}.${draw.drawDate.slice(
       5,
       7
-    )}.${draw.drawDate.slice(0, 4)}`;
+    )}.${draw.drawDate.slice(2, 4)}`;
     const newFive = [...draw.results[0].resultsJson].sort((a, b) => a - b);
     const newTwo = [...draw.results[0].specialResults].sort((a, b) => a - b);
 
