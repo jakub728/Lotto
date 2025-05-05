@@ -12,6 +12,13 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+const users = [
+  {
+    username: "admin",
+    password: "1234",
+  },
+];
+
 app.get("/api/results", async (req, res) => {
   const options = {
     method: "GET",
@@ -68,6 +75,20 @@ app.get("/api/results", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to process results" });
+  }
+});
+
+app.post("/api/login", (req, res) => {
+  const { username, password } = req.body;
+
+  const user = users.find(
+    (u) => u.username === username && u.password === password
+  );
+
+  if (user) {
+    res.json({ success: true, message: "Logged in!" });
+  } else {
+    res.status(401).json({ success: false, message: "Invalid credentials" });
   }
 });
 
