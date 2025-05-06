@@ -54,6 +54,28 @@ label p {
   border-radius: 50%;
 }
 
+.generate-3 {
+  display: flex;
+  gap: 0.2rem;
+  align-items: center;
+  margin: 2rem;
+
+  p {
+    width: 6rem;
+  }
+}
+
+.generate-3 div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  text-align: center;
+  border-radius: 50%;
+}
+
 .five {
   background-color: white;
   color: black;
@@ -125,6 +147,35 @@ label p {
 
   .generate-2 {
     margin-bottom: 0.5rem;
+  }
+
+  .generate-3 {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0.5rem;
+
+    p {
+      font-size: 0.8rem;
+      text-align: center;
+      margin: 0;
+      width: 5rem;
+    }
+  }
+
+  .generate-3 div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+    text-align: center;
+    border-radius: 50%;
+  }
+  .delete-button {
+    font-size: 0.7rem;
+    padding: 0.2rem;
   }
 
   .green-button {

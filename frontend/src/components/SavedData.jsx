@@ -32,8 +32,8 @@ export default function SavedData() {
       {saved.length === 0 ? (
         <p>No saved numbers</p>
       ) : (
-        saved.map((entry, index) => (
-          <div key={entry.id || index} className="generate-2">
+        saved.map((entry) => (
+          <div key={entry.id} className="generate-3">
             <p>
               {entry.date} {entry.time}
             </p>

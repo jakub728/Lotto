@@ -71,15 +71,16 @@ export default function Results() {
       ) : (
         <img src="7471270.png" className="spinner" />
       )}
-
-      <button
-        style={{ display: "block", margin: "auto", marginBottom: "1rem" }}
-        onClick={() => {
-          setToggle(!toggle);
-        }}
-      >
-        {toggle ? "LESS" : "MORE"}
-      </button>
+      {data ? (
+        <button
+          style={{ display: "block", margin: "auto", marginBottom: "1rem" }}
+          onClick={() => {
+            setToggle(!toggle);
+          }}
+        >
+          {toggle ? "LESS" : "MORE"}
+        </button>
+      ) : null}
     </div>
   );
 }

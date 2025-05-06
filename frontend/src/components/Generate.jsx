@@ -8,7 +8,7 @@ import { v4 as unique } from "uuid";
 const chance = new Chance();
 
 export default function Generate() {
-  const [numbers, setNumbers] = useState([]);
+  const [numbers, setNumbers] = useState(null);
   const { data } = useContext(DataContext);
 
   // checkbox 1
@@ -45,14 +45,14 @@ export default function Generate() {
     let pool12 = Array.from({ length: 12 }, (_, i) => i + 1);
 
     while (!valid) {
-      if (checkbox1 && data.length > 0) {
-        const recent = data.slice(-input1);
+      if (checkbox1 && numbers.length > 0) {
+        const recent = numbers.slice(-input1);
         const exclude = recent.flatMap((d) => [...d.five]);
         pool = pool.filter((n) => !exclude.includes(n));
       }
 
-      if (checkbox1 && data.length > 0) {
-        const recent2 = data.slice(-input2);
+      if (checkbox1 && numbers.length > 0) {
+        const recent2 = numbers.slice(-input2);
         const exclude2 = recent2.flatMap((d) => [...d.two]);
         pool12 = pool12.filter((n) => !exclude2.includes(n));
       }
@@ -103,7 +103,7 @@ export default function Generate() {
 
   return (
     <div>
-      {data ? (
+      {numbers ? (
         <div className="generate">
           <form action="">
             <h2>OPTIONS</h2>
