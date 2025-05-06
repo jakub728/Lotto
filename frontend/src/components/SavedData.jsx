@@ -21,9 +21,9 @@ export default function SavedData() {
   }, []);
 
   function handleDelete(id) {
-    localStorage.removeItem(`numbers=${id}`);
+    localStorage.removeItem(`numbers-${id}`);
 
-    // setSaved((prev) => prev.filter((entry) => entry.id !== id));
+    setSaved((prev) => prev.filter((entry) => entry.id !== id));
   }
 
   return (
@@ -47,7 +47,12 @@ export default function SavedData() {
                 {num}
               </div>
             ))}
-            <button className="delete-button" onClick={handleDelete(entry.id)}>
+            <button
+              className="delete-button"
+              onClick={() => {
+                handleDelete(entry.id);
+              }}
+            >
               Delete
             </button>
           </div>

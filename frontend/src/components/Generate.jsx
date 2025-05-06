@@ -45,13 +45,13 @@ export default function Generate() {
     let pool12 = Array.from({ length: 12 }, (_, i) => i + 1);
 
     while (!valid) {
-      if (checkbox1 && data.length > 0) {
+      if (checkbox1) {
         const recent = data.slice(-input1);
         const exclude = recent.flatMap((d) => [...d.five]);
         pool = pool.filter((n) => !exclude.includes(n));
       }
 
-      if (checkbox1 && data.length > 0) {
+      if (checkbox1 && input2 > 0) {
         const recent2 = data.slice(-input2);
         const exclude2 = recent2.flatMap((d) => [...d.two]);
         pool12 = pool12.filter((n) => !exclude2.includes(n));
@@ -79,7 +79,7 @@ export default function Generate() {
       },
     ]);
   }
-  
+
   function handleSave(element) {
     const currentDate = new Date();
 
@@ -99,11 +99,11 @@ export default function Generate() {
     localStorage.setItem(`numbers-${element.id}`, JSON.stringify(withDate));
     alert(`Saved`);
   }
-  console.log(numbers);
+  console.log(data);
 
   return (
     <div>
-      {data ? (
+      {data.length > 0 ? (
         <div className="generate">
           <form action="">
             <h2>OPTIONS</h2>
