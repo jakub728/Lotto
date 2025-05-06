@@ -1,8 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
 import "../App.css";
-import "font-awesome/css/font-awesome.min.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
 export default function Layout() {
@@ -26,18 +23,16 @@ export default function Layout() {
           </NavLink>
 
           <NavLink className="menu" to="/data">
-            Saved 
+            Saved
           </NavLink>
         </div>
       </header>
       <header className="small">
         <h1>
           LOTTO APP
-          <FontAwesomeIcon
-            className="burger"
-            icon={faBars}
-            onClick={() => setView(!view)}
-          />
+          <p className="burger" onClick={() => setView(!view)}>
+            &#9776;
+          </p>
         </h1>
         {view ? (
           <div className={`menu-wrapper ${view ? `open` : ``}`}>
@@ -73,12 +68,12 @@ export default function Layout() {
 
             <NavLink
               className="menu"
-              to="/login"
+              to="/data"
               onClick={() => {
                 setView(!view);
               }}
             >
-              Login
+              Saved
             </NavLink>
           </div>
         ) : null}

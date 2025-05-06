@@ -97,6 +97,7 @@ export default function Generate() {
         currentDate.getMinutes().toString().padStart(2, "0"),
     };
     localStorage.setItem(`numbers-${element.id}`, JSON.stringify(withDate));
+    alert(`Saved`);
   }
   console.log(numbers);
 

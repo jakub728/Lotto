@@ -122,9 +122,14 @@ label p {
   #input1 {
     margin-right: 1rem;
   }
+
+  .generate-2 {
+    margin-bottom: 0.5rem;
+  }
+
   .green-button {
-    width: 40px;
-    padding: 0.2rem;
-    font-size: 0.7rem;
+    padding: 1rem;
+    font-size: 0.3rem 0.6rem;
+    margin: auto;
   }
 }

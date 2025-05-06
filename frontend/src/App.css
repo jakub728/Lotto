@@ -221,7 +221,7 @@ header {
     .burger {
       display: block;
       position: absolute;
-      top: 8px;
+      top: -25px;
       right: 12px;
       color: white;
       cursor: pointer;
