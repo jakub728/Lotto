@@ -22,14 +22,6 @@
   }
 }
 
-.saved-results {
-  max-width: 600px;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
-.delete-button {
-  background-color: lightcoral;
-}
+
+

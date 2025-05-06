@@ -27,26 +27,28 @@ export default function SavedData() {
   }
 
   return (
-    <div className="saved-results">
+    <div className="saved-wrapper">
       <h2>Saved Numbers</h2>
       {saved.length === 0 ? (
         <p>No saved numbers</p>
       ) : (
         saved.map((entry) => (
-          <div key={entry.id} className="generate-3">
+          <div className="saved-1">
             <p>
               {entry.date} {entry.time}
             </p>
-            {entry.five.map((num, i) => (
-              <div className="five" key={i}>
-                {num}
-              </div>
-            ))}
-            {entry.two.map((num, i) => (
-              <div className="two" key={i}>
-                {num}
-              </div>
-            ))}
+            <div key={entry.id} className="saved-2">
+              {entry.five.map((num, i) => (
+                <div className="five" key={i}>
+                  {num}
+                </div>
+              ))}
+              {entry.two.map((num, i) => (
+                <div className="two" key={i}>
+                  {num}
+                </div>
+              ))}
+            </div>
             <button
               className="delete-button"
               onClick={() => {
@@ -55,6 +57,7 @@ export default function SavedData() {
             >
               Delete
             </button>
+            <hr />
           </div>
         ))
       )}

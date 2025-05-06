@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
+import { ToastContainer, toast } from "react-toastify";
 import "../App.css";
 import "../style/Generate.css";
 import Chance from "chance";
@@ -45,7 +46,7 @@ export default function Generate() {
     let pool12 = Array.from({ length: 12 }, (_, i) => i + 1);
 
     while (!valid) {
-      if (checkbox1) {
+      if (checkbox1 && input1 > 0) {
         const recent = data.slice(-input1);
         const exclude = recent.flatMap((d) => [...d.five]);
         pool = pool.filter((n) => !exclude.includes(n));
@@ -97,12 +98,24 @@ export default function Generate() {
         currentDate.getMinutes().toString().padStart(2, "0"),
     };
     localStorage.setItem(`numbers-${element.id}`, JSON.stringify(withDate));
-    alert(`Saved`);
+    toast.success("Numbers saved");
   }
   console.log(data);
 
   return (
     <div>
+      <ToastContainer
+        className="alert"
+        autoClose={500}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       {data.length > 0 ? (
         <div className="generate">
           <form action="">
