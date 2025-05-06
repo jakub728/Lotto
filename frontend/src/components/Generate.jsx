@@ -37,6 +37,21 @@ export default function Generate() {
       return false;
     }
 
+    // ! liczby co pod rząd co 10
+    function hasArithmeticSequenceStep10(arr, length = 3, step = 10) {
+      const set = new Set(arr);
+      for (let i = 0; i < arr.length; i++) {
+        let count = 1;
+        let next = arr[i] + step;
+        while (set.has(next)) {
+          count++;
+          next += step;
+          if (count >= length) return true;
+        }
+      }
+      return false;
+    }
+
     const count50 = checkbox2 ? input3 : 5;
     const count12 = checkbox2 ? input4 : 2;
 
@@ -62,7 +77,10 @@ export default function Generate() {
 
       generated5from50 = chance.pickset(pool, count50).sort((a, b) => a - b);
 
-      if (!hasSequentialNumbers(generated5from50, 3)) {
+      if (
+        !hasSequentialNumbers(generated5from50, 3) &&
+        !hasArithmeticSequenceStep10(generated5from50, 3, 10)
+      ) {
         valid = true;
       }
     }
@@ -215,6 +233,16 @@ export default function Generate() {
                 * default without 3 or more numbers in row ex. 25, 26, 27..
                 <p>
                   (domyślnie bez 3 lub wiecej liczb pod rząd np. 25, 26, 27)
+                </p>
+              </label>
+            </div>
+            <div className="option">
+              <label htmlFor="">
+                * default without 3 or more numbers in row with difference 10
+                ex. 10, 20, 30..
+                <p>
+                  (domyślnie bez 3 lub wiecej liczb pod rząd rożniących się o 10
+                  np. 10, 20, 30)
                 </p>
               </label>
             </div>
