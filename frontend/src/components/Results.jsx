@@ -6,7 +6,12 @@ export default function Results() {
 
   const [toggle, setToggle] = useState(false);
 
+  let newDataSmall = structuredClone(data.slice(-5));
+  let newDataBig = structuredClone(data);
 
+  let newDataSmallReverse = structuredClone(newDataSmall.reverse());
+
+  console.log(data);
 
   return (
     <div className="results">
@@ -17,7 +22,7 @@ export default function Results() {
       />
       {data.length > 0 ? (
         toggle ? (
-          data.reverse().map((element) => (
+          newDataBig.reverse().map((element) => (
             <div key={element.dateId} className="results-div">
               <p style={{ color: "black" }}></p>
               <p>{element.date}</p>
@@ -31,27 +36,24 @@ export default function Results() {
             </div>
           ))
         ) : (
-          data
-            .slice(-5)
-            .reverse()
-            .map((element) => (
-              <div key={element.dateId} className="results-div">
-                <p style={{ color: "black" }}></p>
-                <p>{element.date}</p>
+          newDataSmallReverse.map((element) => (
+            <div key={element.dateId} className="results-div">
+              <p style={{ color: "black" }}></p>
+              <p>{element.date}</p>
 
-                {element.five.map((e, index) => (
-                  <div key={index}>{e}</div>
-                ))}
-                {element.two.map((e, index) => (
-                  <div key={index}>{e}</div>
-                ))}
-              </div>
-            ))
+              {element.five.map((e, index) => (
+                <div key={index}>{e}</div>
+              ))}
+              {element.two.map((e, index) => (
+                <div key={index}>{e}</div>
+              ))}
+            </div>
+          ))
         )
       ) : (
         <img src="7471270.png" className="spinner" />
       )}
-      {data ? (
+      {data.length > 0 ? (
         <button
           style={{ display: "block", margin: "auto", marginBottom: "1rem" }}
           onClick={() => {
