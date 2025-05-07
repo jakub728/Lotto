@@ -53,7 +53,7 @@ app.get("/api/results", async (req, res) => {
       const fileContent = await fs.readFile(resultsPath, "utf-8");
       results = JSON.parse(fileContent);
     } catch (e) {
-      results = [];
+      console.log(e);
     }
 
     const exists = results.some((r) => r.dateId === id);
