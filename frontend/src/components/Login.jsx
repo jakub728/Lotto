@@ -6,6 +6,7 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const commit = [];
   const handleLogin = async (e) => {
     e.preventDefault();
 
