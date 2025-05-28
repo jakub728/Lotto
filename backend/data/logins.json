@@ -1,0 +1,46 @@
+[
+  {
+    "username": "admin",
+    "password": "1234",
+    "id": "c0389339-b9b2-4d83-ae8f-975e5e6c04b2",
+    "saved": [
+      {
+        "numbersId": "d6c60cf1-ef04-48af-8157-c1fbf0237934",
+        "date": "2025-05-30",
+        "five": [
+          11,
+          20,
+          30,
+          40,
+          50
+        ],
+        "two": [
+          1,
+          2
+        ]
+      }
+    ]
+  },
+  {
+    "username": "janusz",
+    "password": "satkurier",
+    "id": "c0389339-b9b2-4d83-ae8f-911e5e6c04c2",
+    "saved": [
+      {
+        "numbersId": "1724acd4-0495-4b4f-901d-0c9017f115e9",
+        "date": "2025-05-28",
+        "five": [
+          10,
+          20,
+          30,
+          40,
+          50
+        ],
+        "two": [
+          1,
+          2
+        ]
+      }
+    ]
+  }
+]

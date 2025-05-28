@@ -4,6 +4,7 @@ import cors from "cors";
 import fs from "fs/promises";
 import path from "path";
 import dotenv from "dotenv";
+import loginRouter from "./routes/login.js";
 
 const resultsPath = path.join(path.resolve(), "data", "lastResults.json");
 
@@ -69,26 +70,9 @@ app.get("/api/results", async (req, res) => {
   }
 });
 
-const users = [
-  {
-    username: "admin",
-    password: "1234",
-  },
-];
 
-app.post("/api/login", (req, res) => {
-  const { username, password } = req.body;
 
-  const user = users.find(
-    (u) => u.username === username && u.password === password
-  );
-
-  if (user) {
-    res.json({ success: true, message: "Logged in!" });
-  } else {
-    res.status(401).json({ success: false, message: "Invalid credentials" });
-  }
-});
+app.use("/login", loginRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
