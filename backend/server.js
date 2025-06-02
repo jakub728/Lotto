@@ -15,8 +15,6 @@ dotenv.config();
 app.use(cors());
 app.use(express.json());
 
-let results = JSON.parse(await fs.readFile(resultsPath, "utf-8"));
-
 app.get("/api/results", async (req, res) => {
   const options = {
     method: "GET",
@@ -46,6 +44,8 @@ app.get("/api/results", async (req, res) => {
     const newFive = [...draw.results[0].resultsJson].sort((a, b) => a - b);
     const newTwo = [...draw.results[0].specialResults].sort((a, b) => a - b);
 
+    let results = JSON.parse(await fs.readFile(resultsPath, "utf-8"));
+
     if (!results.some((r) => r.dateId === id)) {
       results.push({
         date: newDate,
@@ -69,8 +69,6 @@ app.get("/api/results", async (req, res) => {
     res.status(500).json({ error: "Failed to process results" });
   }
 });
-
-
 
 app.use("/login", loginRouter);
 
