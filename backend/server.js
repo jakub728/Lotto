@@ -5,13 +5,16 @@ import fs from "fs/promises";
 import path from "path";
 import dotenv from "dotenv";
 import loginRouter from "./routes/login.js";
+import resultsRouter from "./routes/results.js";
+import { connectDB } from "./data/utilities/connectDB.js";
 
 const resultsPath = path.join(path.resolve(), "data", "lastResults.json");
 
 const app = express();
 const port = process.env.PORT || 5000;
-
+connectDB();
 dotenv.config();
+
 app.use(cors());
 app.use(express.json());
 
@@ -70,6 +73,7 @@ app.get("/api/results", async (req, res) => {
   }
 });
 
+app.use("/results", resultsRouter);
 app.use("/login", loginRouter);
 
 app.listen(port, () => {
