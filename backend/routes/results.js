@@ -1,12 +1,13 @@
 import express from "express";
 import ResultsModel from "../schema/resultsModel.js";
 
+
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
     const allResults = await ResultsModel.find().sort({ number: 1 });
-    res.status(201).json(allResults);
+    res.status(200).json(allResults);
   } catch (error) {
     next({ status: 400, message: error.message });
   }
