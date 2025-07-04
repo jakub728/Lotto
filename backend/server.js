@@ -12,7 +12,7 @@ import resultsRouter from "./routes/results.js";
 import { connectDB } from "./data/utilities/connectDB.js";
 await connectDB();
 
-const resultsPath = path.join(path.resolve(), "data", "lastResults.json");
+// const resultsPath = path.join(path.resolve(), "data", "lastResults.json");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -21,6 +21,16 @@ const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+
+app.get("/test-db", async (req, res) => {
+  try {
+    await mongoose.connection.db.admin().ping();
+    res.json({ status: "connected", readyState: mongoose.connection.readyState });
+  } catch (err) {
+    res.status(500).json({ status: "error", error: err.message });
+  }
+});
+
 
 // app.get("/api/results", async (req, res) => {
 //   const options = {
