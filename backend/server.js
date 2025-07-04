@@ -4,12 +4,12 @@ import cors from "cors";
 import fs from "fs/promises";
 import path from "path";
 import dotenv from "dotenv";
+dotenv.config();
 import axios from "axios";
 
 import loginRouter from "./routes/login.js";
 import resultsRouter from "./routes/results.js";
 import { connectDB } from "./data/utilities/connectDB.js";
-dotenv.config();
 connectDB();
 
 const resultsPath = path.join(path.resolve(), "data", "lastResults.json");
