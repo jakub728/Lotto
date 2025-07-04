@@ -9,15 +9,15 @@ import axios from "axios";
 import loginRouter from "./routes/login.js";
 import resultsRouter from "./routes/results.js";
 import { connectDB } from "./data/utilities/connectDB.js";
-
-
+dotenv.config();
+connectDB();
 
 const resultsPath = path.join(path.resolve(), "data", "lastResults.json");
 
 const app = express();
 const port = process.env.PORT || 5000;
-connectDB();
-dotenv.config();
+
+
 
 app.use(cors());
 app.use(express.json());
