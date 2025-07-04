@@ -53,7 +53,7 @@ router.post("/", async (req, res, next) => {
 
     let add = await ResultsModel.find({ number: addNumber });
 
-    if (!add) {
+    if (add.length === 0) {
       await ResultsModel.create(newResult);
       res.status(201).json(newResult);
     }
@@ -62,9 +62,35 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+
+router.post("/manual", async (req, res, next) => {
+  try {
+    const {number, date, five, two} = req.body
+    
+    
+    const newResult = {
+      number,
+      date,
+      five,
+      two,
+    };
+    if (!number || !date || !five || !two) {
+      return res.status(400).json({ message: "No data" });
+    }
+
+    await ResultsModel.create(newResult)
+    res.status(200).send("You added a result")
+  } catch (error) {
+    next({ status: 400, message: error.message });
+  } 
+})
+
+
 router.delete("/", async (req, res, next) => {
   try {
-    await ResultsModel.deleteMany();
+    const {number} = req.body
+
+    await ResultsModel.deleteOne({ number});
     res.status(200).send("done");
   } catch (error) {
     next({ status: 400, message: error.message });
