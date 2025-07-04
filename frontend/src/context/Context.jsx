@@ -9,7 +9,7 @@ export default function DataProvider({ children }) {
     async function fetchData() {
       try {
         const response = await fetch(
-          "https://lotto-backend-pfhh.onrender.com/api/results"
+          "https://lotto-backend-pfhh.onrender.com/results"
         );
         if (!response.ok) {
           throw new Error(`Could not fetch data: ${response.status}`);

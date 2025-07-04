@@ -23,7 +23,7 @@ export default function Results() {
       {data.length > 0 ? (
         toggle ? (
           newDataBig.reverse().map((element) => (
-            <div key={element.dateId} className="results-div">
+            <div key={element.number} className="results-div">
               <p style={{ color: "black" }}></p>
               <p>{element.date}</p>
 
@@ -37,7 +37,7 @@ export default function Results() {
           ))
         ) : (
           newDataSmallReverse.map((element) => (
-            <div key={element.dateId} className="results-div">
+            <div key={element.number} className="results-div">
               <p style={{ color: "black" }}></p>
               <p>{element.date}</p>
 
