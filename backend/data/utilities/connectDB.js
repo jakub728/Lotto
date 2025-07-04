@@ -9,10 +9,7 @@ export const connectDB = async () => {
       throw new Error("Missing DB_URI in environment variables");
     }
 
-    await mongoose.connect(process.env.DB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(process.env.DB_URI);
     console.log("Database connected");
   } catch (error) {
     console.error(error.message);
