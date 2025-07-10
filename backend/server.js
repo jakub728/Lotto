@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser"
+import compression from "compression";
 import registerRouter from "./routes/register.js"
 import loginRouter from "./routes/login.js";
 import resultsRouter from "./routes/results.js";

@@ -15,10 +15,10 @@ router.get("/verify/:token", async (req, res, next) => {
         const {token} = req.params
 
         const findToken = await Verification.findOne({token})
-        if (!findToken) {next({status:404, message: "Invalid expired token!"})}
+        if (!findToken) {return next({status:404, message: "Invalid expired token!"})}
 
         const findUser = await UserModel.findById(findToken.user)
-        if (!findUser) {next({status:404, message: "User doesn't exist!"})}
+        if (!findUser) {return next({status:404, message: "User doesn't exist!"})}
 
         findUser.verified = true
         await findUser.save()
