@@ -48,6 +48,19 @@ router.post("/user/login", async (req, res, next) => {
   }
 });
 
+//! LOGOUT USER
+// http://localhost:5000/login/user/logout
+router.post("/user/logout", async (req,res) => {
+  res.clearCookie("token", {
+      httpOnly: true,
+      sameSite: "none",
+      secure: true
+  })
+  
+  res.status(200).json({message: "Logged out successfully"})
+})
+
+
 //! CHECK TOKEN AFTER LOGIN FOR isLoggedIn
 // http://localhost:5000/login/auth/check
 router.get("/auth/check", checkToken, async (req, res, next) => {
