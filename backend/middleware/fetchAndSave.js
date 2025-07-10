@@ -1,4 +1,4 @@
-import ResultsModel from "../schema/resultsModel.js";
+import ResultsModel from "../models/resultsModel.js";
 
 
 export async function fetchAndSaveResults() {
