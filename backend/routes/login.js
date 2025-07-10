@@ -1,8 +1,8 @@
 import express from "express";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
-
 import { UserModel } from "../models/userModel.js";
+import { checkToken } from "../middleware/checkToken.js"
 
 const router = express.Router();
 
@@ -19,7 +19,7 @@ router.get("/users/all", async(req, res, next) => {
 });
 
 //! LOGIN USER
-// http://localhost:500/login/user/login
+// http://localhost:5000/login/user/login
 router.post("/user/login", async (req, res, next) => {
   try {
     const {email, password} = req.body
@@ -39,9 +39,6 @@ router.post("/user/login", async (req, res, next) => {
       sameSite: "none",
       secure: true
     };
-
-
-
     res.cookie("token", token, cookieOptions);
 
     res.status(200).json({message: "Successfully logged in"})
@@ -50,6 +47,14 @@ router.post("/user/login", async (req, res, next) => {
     next({status: 400, message: error.message})
   }
 });
+
+//! CHECK TOKEN AFTER LOGIN FOR isLoggedIn
+// http://localhost:5000/login/auth/check
+router.get("/auth/check", checkToken, async (req, res, next) => {
+  res.status(200).json({ message: "Authenticated", userId: req.userId });
+})
+
+
 
 
 export default router;
