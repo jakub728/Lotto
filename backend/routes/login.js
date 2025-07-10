@@ -33,16 +33,14 @@ router.post("/user/login", async (req, res, next) => {
     const token = jwt.sign({userId: findUser._id},process.env.JWT_SECRET,{expiresIn:"24h"})
 
     
-    // ADD TO RENDER.COM NODE_ENV=production
     const cookieOptions = {
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000, // 24h
-      sameSite: "strict",
+      sameSite: "none",
+      secure: true
     };
 
-    if (process.env.NODE_ENV === "production") {
-      cookieOptions.secure = true; 
-    }
+
 
     res.cookie("token", token, cookieOptions);
 
