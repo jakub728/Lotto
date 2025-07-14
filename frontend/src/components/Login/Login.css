@@ -1,0 +1,53 @@
+.login-form {
+    width: 500px;
+    margin-top: 5rem;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    label {
+        margin: 2rem 0 1rem 0;
+        font-size: 1.2rem;
+    }
+
+    input {
+        width: 75%;
+        background-color: lightgray;
+        border: none;
+        height: 2rem;
+
+        :focus {
+            border-color: black;
+        }
+    }
+    
+    button {
+        margin: 1rem auto;
+    }
+
+    .message {
+        color: white;
+        width: 200px;
+        display: block;
+        margin: auto;
+    }
+}
+
+@media (max-width: 430px) {
+    .login-form  {
+        width: 300px;
+        margin-top: 2rem;
+
+
+        label {
+            margin: 0.8rem 0 0.3rem 0;
+            font-size: 1.2rem;
+        }
+
+        h3 a {
+            display: block;
+            color: rgb(92, 92, 253);
+        }
+    } 
+}

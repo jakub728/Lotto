@@ -4,6 +4,8 @@ export const DataContext = createContext();
 
 export default function DataProvider({ children }) {
   const [data, setData] = useState([]);
+  
+
 
   useEffect(() => {
     async function fetchData() {

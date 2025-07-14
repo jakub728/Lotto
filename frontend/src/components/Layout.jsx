@@ -1,9 +1,13 @@
 import { NavLink, Outlet } from "react-router-dom";
+import { useState, useContext } from "react";
 import "../App.css";
-import { useState } from "react";
+import { AuthenticationContext } from "../context/AuthenticationContext";
 
 export default function Layout() {
   const [view, setView] = useState(false);
+  const {isLoggedIn, handleLogout} = useContext(AuthenticationContext)
+  console.log(isLoggedIn);
+  
 
   return (
     <>
@@ -22,9 +26,15 @@ export default function Layout() {
             Generate
           </NavLink>
 
+          {/* to be deleted
           <NavLink className="menu" to="/data">
             Saved
-          </NavLink>
+          </NavLink> */}
+          {isLoggedIn ? 
+            <a className="menu" onClick={() => {handleLogout()}}>Log out</a> :
+          <NavLink className="menu" to="/register">
+            Register
+          </NavLink>}
         </div>
       </header>
       <header className="small">
@@ -66,6 +76,8 @@ export default function Layout() {
               Generate
             </NavLink>
 
+
+              {/* to be deleted */}
             <NavLink
               className="menu"
               to="/data"
@@ -74,6 +86,16 @@ export default function Layout() {
               }}
             >
               Saved
+            </NavLink>
+
+            <NavLink
+              className="menu"
+              to="/register"
+              onClick={() => {
+                setView(!view);
+              }}
+            >
+              Register
             </NavLink>
           </div>
         ) : null}
