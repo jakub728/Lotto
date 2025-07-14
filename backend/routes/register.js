@@ -4,6 +4,7 @@ import {v4 as uuid} from "uuid"
 import { UserModel } from "../models/userModel.js";
 import { Verification } from "../models/verificationModel.js";
 import { validatUser } from "../middleware/validateUser.js";
+import sendVerificationEmail from "../utilities/verificationEmail.js";
 
 const router = express.Router();
 
@@ -45,9 +46,12 @@ router.post("/user", validatUser, async(req,res,next) => {
             token
         }
 
-        const newVerification = await Verification.create(verificationData)
+        const verificationLink = `https://lotto-backend-pfhh.onrender.com/register/verify/${token}`;
 
-        
+        await Verification.create(verificationData)
+
+        await sendVerificationEmail(newUser.email, verificationLink)
+
         res.status(201).send({message: "User is successfully registered!"})
     } catch (error) {
         next({status: 400, message: error.message})
