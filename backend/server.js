@@ -1,13 +1,28 @@
+//? NODE MODULES
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser"
 import compression from "compression";
+//?
+
+
+//? ROUTES
 import registerRouter from "./routes/register.js"
 import loginRouter from "./routes/login.js";
 import resultsRouter from "./routes/results.js";
+import savedRouter from "./routes/saved.js"
+//?
+
+
+//? UTILITIES
 import { connectDB } from "./utilities/connectDB.js";
+//?
+
+
+//? MIDDLEWARE
 import { fetchAndSaveResults } from "./middleware/fetchAndSave.js";
+//?
 
 
 dotenv.config();
@@ -50,6 +65,7 @@ setInterval(fetchAndSaveResults, 10*60*1000)
 app.use("/results", resultsRouter);
 app.use("/login", loginRouter);
 app.use("/register", registerRouter)
+app.use("/saved", savedRouter)
 //!
 
 //!GLOBAL ERROR

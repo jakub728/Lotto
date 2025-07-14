@@ -9,7 +9,6 @@ const transporter = createTransport({
   },
 });
 
-//! add email and password from lotto.app00@gmail.com
 
 
 /**

@@ -6,10 +6,11 @@ const trim = true
 
 
 const savedSchema = new Schema({
+  user: {type: Schema.Types.ObjectId, ref: 'User', required: true},
   number: { type: Number },
   date: { type: String },
-  five: { type: [], min: 5, max: 5},
-  two: { type: [], min: 2, max: 2},
+  five: { type: []},
+  two: { type: []},
 });
 
 export const SavedNumbersModel = model("Saved", savedSchema)
