@@ -26,14 +26,14 @@ export default function Layout() {
             Generate
           </NavLink>
 
-          {/* to be deleted
-          <NavLink className="menu" to="/data">
+          {isLoggedIn && <NavLink style={{color: "red"}} className="menu" to="/data">
             Saved
-          </NavLink> */}
+          </NavLink>}
+          
           {isLoggedIn ? 
-            <a className="menu" onClick={() => {handleLogout()}}>Log out</a> :
+            <a className="menu" style={{color: "grey"}} onClick={() => {handleLogout()}}>Log out</a> :
           <NavLink className="menu" to="/register">
-            Register
+            Sign In
           </NavLink>}
         </div>
       </header>
@@ -77,26 +77,27 @@ export default function Layout() {
             </NavLink>
 
 
-              {/* to be deleted */}
-            <NavLink
+            {isLoggedIn && <NavLink
               className="menu"
+              style={{color: "red"}}
               to="/data"
               onClick={() => {
                 setView(!view);
               }}
             >
-              Saved
-            </NavLink>
-
-            <NavLink
+              Your numbers
+            </NavLink>} 
+            
+              {isLoggedIn ? <a className="menu" style={{color: "grey"}} onClick={() => {handleLogout()}}>Log out</a> : <NavLink
               className="menu"
               to="/register"
               onClick={() => {
                 setView(!view);
               }}
             >
-              Register
-            </NavLink>
+              Sign In
+            </NavLink>}
+            
           </div>
         ) : null}
       </header>

@@ -26,12 +26,15 @@
         margin: 1rem auto;
     }
 
-    .message {
-        color: white;
-        width: 200px;
-        display: block;
-        margin: auto;
-    }
+    
+}
+
+.message-div {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-top: 4rem;
+    font-size: 2rem;
 }
 
 @media (max-width: 430px) {
@@ -50,4 +53,10 @@
             color: rgb(92, 92, 253);
         }
     } 
+
+    .message-div {
+        display: flex;
+        justify-content: center;
+        margin-top: 3rem;
+    }
 }

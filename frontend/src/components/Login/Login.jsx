@@ -47,7 +47,7 @@ export default function Login() {
       setIsLoggedIn(true)
       setTimeout(() => {
         navigate("/results")
-      }, 3000);
+      }, 1000);
 
     } catch (error) {
       console.error("Login error:", error);
@@ -82,10 +82,10 @@ export default function Login() {
           <button type="submit">Log in</button>
         </form>
       ) : (
-        <>
+        <div className="message-div">
         <p className="message">{message}</p>
         <p>{error}</p>
-        </>
+        </div>
       )}
     </div>
   );
