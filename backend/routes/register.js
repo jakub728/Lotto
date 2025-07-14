@@ -46,7 +46,7 @@ router.post("/user", validatUser, async(req,res,next) => {
             token
         }
 
-        const verificationLink = `https://lotto-backend-pfhh.onrender.com/register/verify/${token}`;
+        const verificationLink = `https://lotto-j6xo.onrender.com/login`;
 
         await Verification.create(verificationData)
 
