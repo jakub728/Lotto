@@ -6,7 +6,6 @@ const trim = true
 
 
 const userSchema = new Schema({
-    username: {type: String, required},
     email: {type: String, required, unique, trim},
     password: {type: String, required},
     verified: {type: Boolean, default: false}
