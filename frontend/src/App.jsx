@@ -7,7 +7,7 @@ import Results from "./components/Results";
 import Generate from "./components/Generate";
 import Login from "./components/Login/Login.jsx";
 import Register from "./components/Register/Register.jsx";
-import SavedData from "./components/SavedData";
+import SavedData from "./components/SavedData/SavedData";
 import DataProvider from "./context/Context";
 import AuthenticationProvider from "./context/AuthenticationContext.jsx";
 import AfterLogin from "./components/AfterLoginPage/AfterLogin.jsx";

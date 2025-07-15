@@ -293,8 +293,8 @@ export default function Generate() {
           </form>
           <div className="generate-1">
             {numbers
-              ? numbers.map((element) => (
-                  <div className="generate-1-5">
+              ? numbers.map((element, index) => (
+                  <div className="generate-1-5" key={index}>
                     <div className="generate-2">
                       {element.five.map((e, index) => (
                         <div className="five" key={index}>
