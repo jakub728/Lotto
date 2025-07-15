@@ -69,7 +69,7 @@ export default function Register() {
              onChange={(e)=> setEmail(e.target.value)} 
              />
       <label>Username</label>
-      <input type="username"
+      <input type="text"
              name="username"
              onChange={(e)=> setUsername(e.target.value)} 
              />
