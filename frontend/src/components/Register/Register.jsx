@@ -16,11 +16,14 @@ export default function Register() {
     setError('')
     setMessage('')
 
-
-
     const newUser = {
       email,
       password
+    }
+
+    if (!email || !password) {
+      setError("Please fill in all fields")
+      return
     }
 
     const config = {
@@ -73,7 +76,8 @@ export default function Register() {
       />
       
       <button type="submit">Register</button>
-      <h3>Already have an account? <a onClick={()=> {navigate("/login")}}>Log In</a></h3>
+        <h3>Already have an account? <a onClick={() => { navigate("/login") }}>Log In</a></h3>
+        {error && <div className="message">{error}</div>}
     </form>
     {error && <div className="message">{error}</div>}
     {message && <div className="message">{message}</div>}
