@@ -7,14 +7,13 @@ import { DataContext } from "../context/Context";
 import { v4 as unique } from "uuid";
 import { AuthenticationContext } from "../context/AuthenticationContext";
 
-
 const chance = new Chance();
 
 export default function Generate() {
   const [numbers, setNumbers] = useState([]);
   const { data } = useContext(DataContext);
-  const {isLoggedIn} = useContext(AuthenticationContext)
-  
+  const { isLoggedIn } = useContext(AuthenticationContext);
+
   // checkbox 1
   const [checkbox1, setCheckbox1] = useState(false);
   const [input1, setInput1] = useState(0);
@@ -102,7 +101,7 @@ export default function Generate() {
     ]);
   }
 
-  const handleSave = async(element) => {
+  const handleSave = async (element) => {
     const currentDate = new Date();
 
     const withDate = {
@@ -122,29 +121,29 @@ export default function Generate() {
     const config = {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(withDate),
-      credentials: "include"
-    }
-
+      credentials: "include",
+    };
 
     try {
-      const response = await fetch("https://lotto-backend-pfhh.onrender.com/saved/user/saveNumbers", config)
-      const data = await response.json()
+      const response = await fetch(
+        "https://lotto-production-5b11.up.railway.app/saved/user/saveNumbers",
+        config,
+      );
+      const data = await response.json();
 
       if (!response.ok) {
         toast.error(data.message || "Failed to save numbers");
-        return
+        return;
       }
-
 
       toast.success(data.message || "Numbers saved successfully");
     } catch (error) {
-      toast.error(error.message || "Unexpected error")
-    } 
-  }
-  
+      toast.error(error.message || "Unexpected error");
+    }
+  };
 
   return (
     <div>

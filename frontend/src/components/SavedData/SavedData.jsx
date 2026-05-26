@@ -3,97 +3,90 @@ import { data } from "react-router-dom";
 
 export default function SavedData() {
   const [saved, setSaved] = useState([]);
-  
+
   useEffect(() => {
     const receveNumbers = async () => {
       const config = {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json"
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      try {
+        const response = await fetch(
+          "https://lotto-production-5b11.up.railway.app/saved/user/savedNumbers",
+          config,
+        );
+        const data = await response.json();
+
+        if (!response.ok) {
+          console.error("Error:", data);
+          return;
+        }
+
+        setSaved(data);
+      } catch (error) {
+        console.error(error);
       }
-    }
- 
-    try {
-      const response = await fetch("https://lotto-backend-pfhh.onrender.com/saved/user/savedNumbers", config)
-      const data = await response.json()
+    };
+    receveNumbers();
+  }, []);
 
-      if (!response.ok) {
-        console.error("Error:", data);
-        return
-      }
-
-      setSaved(data)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-  receveNumbers()
-    
-  }, [])
-  
-  console.log(
-    saved
-  );
-  
-
-
+  console.log(saved);
 
   const receveNumbers = async () => {
-      const config = {
+    const config = {
       method: "GET",
       credentials: "include",
       headers: {
-        "Content-Type": "application/json"
-      }
-    }
- 
+        "Content-Type": "application/json",
+      },
+    };
+
     try {
-      const response = await fetch("https://lotto-backend-pfhh.onrender.com/saved/user/savedNumbers", config)
-      const data = await response.json()
+      const response = await fetch(
+        "https://lotto-production-5b11.up.railway.app/saved/user/savedNumbers",
+        config,
+      );
+      const data = await response.json();
 
       if (!response.ok) {
         console.error("Error:", data);
-        return
+        return;
       }
 
-      setSaved(data)
+      setSaved(data);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
-
-  
-  
-
+  };
 
   const handleDelete = async (id) => {
     const config = {
       method: "DELETE",
       credentials: "include",
       headers: {
-        "Content-Type": "application/json"
-      }
-    }
+        "Content-Type": "application/json",
+      },
+    };
 
     try {
-      const response = await fetch(`https://lotto-backend-pfhh.onrender.com/saved/user/savedNumbers/${id}`, config)
+      const response = await fetch(
+        `https://lotto-production-5b11.up.railway.app/saved/user/savedNumbers/${id}`,
+        config,
+      );
 
       if (!response.ok) {
-        console.error("Error")
+        console.error("Error");
       }
 
-     setSaved((prev) => prev.filter((entry) => entry._id !== id));
-
-
+      setSaved((prev) => prev.filter((entry) => entry._id !== id));
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
-
-  
-  
-
+  };
 
   return (
     <div className="saved-wrapper">
@@ -103,9 +96,7 @@ export default function SavedData() {
       ) : (
         saved.map((entry, index) => (
           <div className="saved-1" key={index}>
-            <p>
-              {entry.date}
-            </p>
+            <p>{entry.date}</p>
             <div key={entry._id} className="saved-2">
               {entry.five.map((num, i) => (
                 <div className="five" key={i}>

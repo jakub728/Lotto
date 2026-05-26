@@ -4,14 +4,12 @@ export const DataContext = createContext();
 
 export default function DataProvider({ children }) {
   const [data, setData] = useState([]);
-  
-
 
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await fetch(
-          "https://lotto-backend-pfhh.onrender.com/results"
+          "https://lotto-production-5b11.up.railway.app/results",
         );
         if (!response.ok) {
           throw new Error(`Could not fetch data: ${response.status}`);
