@@ -92,13 +92,15 @@ h3 {
 
 .main-footer {
   position: fixed;
-  bottom: 0;
+  left: 0; /* Przylega do lewej krawędzi */
+  right: 0; /* Przylega do prawej krawędzi */
+  bottom: 0; /* Przylega do dołu */
   text-align: center;
-  padding: 10px 0;
   color: #2d2d2d;
   font-size: 0.8rem;
   font-weight: bold;
   background: #a5a18c;
+  padding: 10px 0; /* Opcjonalnie: doda wewnętrzny odstęp */
 }
 
 .section-header > * {
