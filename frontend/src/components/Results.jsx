@@ -20,21 +20,31 @@ export default function Results() {
         src="/eurojackpot-logo-vector-removebg-preview.png"
         alt="lotto"
       />
+
       {data.length > 0 ? (
         toggle ? (
-          newDataBig.reverse().map((element) => (
-            <div key={element.number} className="results-div">
-              <p style={{ color: "black" }}></p>
-              <p>{element.date}</p>
-
-              {element.five.map((e, index) => (
-                <div key={index}>{e}</div>
-              ))}
-              {element.two.map((e, index) => (
-                <div key={index}>{e}</div>
-              ))}
-            </div>
-          ))
+          <>
+            <button
+              style={{ display: "block", margin: "auto", marginBottom: "1rem" }}
+              onClick={() => {
+                setToggle(!toggle);
+              }}
+            >
+              LESS
+            </button>
+            {newDataBig.reverse().map((element) => (
+              <div key={element.number} className="results-div">
+                <p style={{ color: "black" }}></p>
+                <p>{element.date}</p>
+                {element.five.map((e, index) => (
+                  <div key={index}>{e}</div>
+                ))}
+                {element.two.map((e, index) => (
+                  <div key={index}>{e}</div>
+                ))}
+              </div>
+            ))}
+          </>
         ) : (
           newDataSmallReverse.map((element) => (
             <div key={element.number} className="results-div">
@@ -66,4 +76,3 @@ export default function Results() {
     </div>
   );
 }
-

@@ -1,0 +1,110 @@
+.home-container {
+  margin: auto;
+  background-color: #a5a18c;
+  color: #2d2d2d;
+  font-family: Wallpoet, sans-serif;
+}
+
+.main-title,
+.generate-button,
+h3 {
+  color: #ffee00;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+.hero-section {
+  max-width: 100vw;
+  width: 100%;
+  padding: 20px 0;
+  margin: auto;
+  text-align: center;
+}
+
+.main-title {
+  font-size: clamp(3rem, 10vw, 5rem);
+  margin-top: 20px;
+  letter-spacing: 2px;
+  padding: 0 0.5rem;
+  text-align: center;
+}
+
+.badge {
+  background: #2d2d2d;
+  color: #a5a18c;
+  padding: 5px 15px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 20px auto;
+  color: #f4f4f4;
+  line-height: 1.6;
+}
+
+.generator-box {
+  background: #2d2d2d;
+  padding: 40px;
+  border-radius: 0px;
+  border: 4px solid #ffee00;
+  display: inline-block;
+  margin-top: 30px;
+}
+
+.box-status {
+  color: #a5a18c;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.features-section {
+  max-width: 1100px;
+  margin: 50px auto;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin: 0 30px;
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.feature-card h3 {
+  font-size: 1.5rem;
+  margin: 15px 0;
+  color: #ffee00;
+}
+
+.feature-card p {
+  color: #f4f4f4;
+  line-height: 1.5;
+}
+
+.main-footer {
+  position: fixed;
+  bottom: 0;
+  text-align: center;
+  padding: 10px 0;
+  color: #2d2d2d;
+  font-size: 0.8rem;
+  font-weight: bold;
+  background: #a5a18c;
+}
+
+.section-header > * {
+  text-align: center;
+}
+
+html > * {
+  text-align: center;
+}

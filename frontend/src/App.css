@@ -15,7 +15,7 @@ html {
 /* header */
 header {
   background-color: #000000;
-  width: 100%;
+  width: 100vw;
 
   h1 {
     color: white;
@@ -87,7 +87,6 @@ header {
   width: 100vw;
   max-width: 1600px;
   height: 100vh;
-
 }
 
 .logo {
@@ -114,6 +113,10 @@ header {
   margin-bottom: 1rem;
   color: white;
   padding: 0.5rem;
+}
+
+.results-div p {
+  font-family: Righteous;
 }
 
 .results-wrapper {
@@ -247,7 +250,9 @@ header {
     opacity: 0;
     transform: translateY(-20px);
     pointer-events: none;
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    transition:
+      opacity 0.4s ease,
+      transform 0.4s ease;
   }
   .menu-wrapper.open {
     opacity: 1;
