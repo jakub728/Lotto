@@ -32,6 +32,7 @@ const allowedOrigins = [
   "http://localhost:5173",
   "https://lotto-j6xo.onrender.com",
   "https://euro-gen.up.railway.app",
+  "lotto-frontend-azure.vercel.app",
 ];
 
 app.use(
