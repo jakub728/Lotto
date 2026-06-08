@@ -28,7 +28,11 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 //! CORS DEV MODE ORIGIN
-const allowedOrigins = ["http://localhost:5173", "https://lotto-gen.pl"];
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://lotto-gen.pl",
+  "https://www.lotto-gen.pl",
+];
 
 app.use(
   cors({
