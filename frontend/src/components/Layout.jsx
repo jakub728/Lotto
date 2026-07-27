@@ -1,13 +1,11 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { useState, useContext } from "react";
 import "../App.css";
-import { AuthenticationContext } from "../context/AuthenticationContext";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Layout() {
   const [view, setView] = useState(false);
-  const {isLoggedIn, handleLogout} = useContext(AuthenticationContext)
-  console.log(isLoggedIn);
-  
+  const { isLoggedIn, handleLogout } = useAuth();
 
   return (
     <>
@@ -26,15 +24,27 @@ export default function Layout() {
             Generate
           </NavLink>
 
-          {isLoggedIn && <NavLink style={{color: "red"}} className="menu" to="/data">
-            Saved
-          </NavLink>}
-          
-          {isLoggedIn ? 
-            <a className="menu" style={{color: "grey"}} onClick={() => {handleLogout()}}>Log out</a> :
-          <NavLink className="menu" to="/register">
-            Sign In
-          </NavLink>}
+          {isLoggedIn && (
+            <NavLink style={{ color: "red" }} className="menu" to="/data">
+              Saved
+            </NavLink>
+          )}
+
+          {isLoggedIn ? (
+            <a
+              className="menu"
+              style={{ color: "grey" }}
+              onClick={() => {
+                handleLogout();
+              }}
+            >
+              Log out
+            </a>
+          ) : (
+            <NavLink className="menu" to="/register">
+              Sign In
+            </NavLink>
+          )}
         </div>
       </header>
       <header className="small">
@@ -76,28 +86,40 @@ export default function Layout() {
               Generate
             </NavLink>
 
+            {isLoggedIn && (
+              <NavLink
+                className="menu"
+                style={{ color: "red" }}
+                to="/data"
+                onClick={() => {
+                  setView(!view);
+                }}
+              >
+                Your numbers
+              </NavLink>
+            )}
 
-            {isLoggedIn && <NavLink
-              className="menu"
-              style={{color: "red"}}
-              to="/data"
-              onClick={() => {
-                setView(!view);
-              }}
-            >
-              Your numbers
-            </NavLink>} 
-            
-              {isLoggedIn ? <a className="menu" style={{color: "grey"}} onClick={() => {handleLogout()}}>Log out</a> : <NavLink
-              className="menu"
-              to="/register"
-              onClick={() => {
-                setView(!view);
-              }}
-            >
-              Sign In
-            </NavLink>}
-            
+            {isLoggedIn ? (
+              <a
+                className="menu"
+                style={{ color: "grey" }}
+                onClick={() => {
+                  handleLogout();
+                }}
+              >
+                Log out
+              </a>
+            ) : (
+              <NavLink
+                className="menu"
+                to="/register"
+                onClick={() => {
+                  setView(!view);
+                }}
+              >
+                Sign In
+              </NavLink>
+            )}
           </div>
         ) : null}
       </header>

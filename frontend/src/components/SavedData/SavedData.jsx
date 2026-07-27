@@ -1,92 +1,25 @@
-import { useState, useEffect } from "react";
-import { data } from "react-router-dom";
+import React from "react";
+import { useSavedResults } from "../../hooks/useSavedResults";
+import { api } from "../../api/axios";
 
 export default function SavedData() {
-  const [saved, setSaved] = useState([]);
-
-  useEffect(() => {
-    const receveNumbers = async () => {
-      const config = {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-
-      try {
-        const response = await fetch(
-          "https://lotto-production-5b11.up.railway.app/saved/user/savedNumbers",
-          config,
-        );
-        const data = await response.json();
-
-        if (!response.ok) {
-          console.error("Error:", data);
-          return;
-        }
-
-        setSaved(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    receveNumbers();
-  }, []);
-
-  console.log(saved);
-
-  const receveNumbers = async () => {
-    const config = {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    try {
-      const response = await fetch(
-        "https://lotto-production-5b11.up.railway.app/saved/user/savedNumbers",
-        config,
-      );
-      const data = await response.json();
-
-      if (!response.ok) {
-        console.error("Error:", data);
-        return;
-      }
-
-      setSaved(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const { data: saved = [], isLoading, refetch } = useSavedResults();
 
   const handleDelete = async (id) => {
-    const config = {
-      method: "DELETE",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
     try {
-      const response = await fetch(
-        `https://lotto-production-5b11.up.railway.app/saved/user/savedNumbers/${id}`,
-        config,
-      );
+      await api.delete(`/saved/user/savedNumbers/${id}`, {
+        withCredentials: true,
+      });
 
-      if (!response.ok) {
-        console.error("Error");
-      }
-
-      setSaved((prev) => prev.filter((entry) => entry._id !== id));
+      queryClient.invalidateQueries({ queryKey: ["saved"] });
     } catch (error) {
-      console.error(error);
+      console.error("Failed to delete entry:", error);
     }
   };
+
+  if (isLoading) {
+    return <img src="7471270.png" className="spinner" alt="Loading..." />;
+  }
 
   return (
     <div className="saved-wrapper">
@@ -94,16 +27,16 @@ export default function SavedData() {
       {saved.length === 0 ? (
         <p>No saved numbers</p>
       ) : (
-        saved.map((entry, index) => (
-          <div className="saved-1" key={index}>
+        saved.map((entry) => (
+          <div className="saved-1" key={entry._id}>
             <p>{entry.date}</p>
-            <div key={entry._id} className="saved-2">
-              {entry.five.map((num, i) => (
+            <div className="saved-2">
+              {entry.five?.map((num, i) => (
                 <div className="five" key={i}>
                   {num}
                 </div>
               ))}
-              {entry.two.map((num, i) => (
+              {entry.two?.map((num, i) => (
                 <div className="two" key={i}>
                   {num}
                 </div>
@@ -111,9 +44,7 @@ export default function SavedData() {
             </div>
             <button
               className="delete-button"
-              onClick={() => {
-                handleDelete(entry._id);
-              }}
+              onClick={() => handleDelete(entry._id)}
             >
               Delete
             </button>

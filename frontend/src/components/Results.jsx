@@ -1,17 +1,23 @@
-import { useEffect, useContext, useState } from "react";
-import { DataContext } from "../context/Context";
+import { useState } from "react";
+import { useResults } from "../hooks/useResults";
 
 export default function Results() {
-  const { data, setData } = useContext(DataContext);
-
+  const { data, isLoading, isError, error } = useResults();
   const [toggle, setToggle] = useState(false);
 
-  let newDataSmall = structuredClone(data.slice(-5));
-  let newDataBig = structuredClone(data);
+  if (isLoading) {
+    return (
+      <div className="results">
+        <img src="7471270.png" className="spinner" />
+      </div>
+    );
+  }
 
-  let newDataSmallReverse = structuredClone(newDataSmall.reverse());
+  if (isError) return <div>Błąd: {error?.message}</div>;
 
-  console.log(data);
+  const safeData = Array.isArray(data) ? data : [];
+  const newDataSmallReverse = [...safeData.slice(-5)].reverse();
+  const newDataBigReverse = [...safeData];
 
   return (
     <div className="results">
@@ -20,9 +26,8 @@ export default function Results() {
         src="/eurojackpot-logo-vector-removebg-preview.png"
         alt="lotto"
       />
-
-      {data.length > 0 ? (
-        toggle ? (
+      {safeData.length > 0 &&
+        (toggle ? (
           <>
             <button
               style={{ display: "block", margin: "auto", marginBottom: "1rem" }}
@@ -32,7 +37,7 @@ export default function Results() {
             >
               LESS
             </button>
-            {newDataBig.reverse().map((element) => (
+            {newDataBigReverse.reverse().map((element) => (
               <div key={element.number} className="results-div">
                 <p style={{ color: "black" }}></p>
                 <p>{element.date}</p>
@@ -59,11 +64,8 @@ export default function Results() {
               ))}
             </div>
           ))
-        )
-      ) : (
-        <img src="7471270.png" className="spinner" />
-      )}
-      {data.length > 0 ? (
+        ))}
+      {safeData.length > 0 ? (
         <button
           style={{ display: "block", margin: "auto", marginBottom: "1rem" }}
           onClick={() => {

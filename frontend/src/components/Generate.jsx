@@ -1,18 +1,19 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "../App.css";
 import "../style/Generate.css";
 import Chance from "chance";
-import { DataContext } from "../context/Context";
 import { v4 as unique } from "uuid";
-import { AuthenticationContext } from "../context/AuthenticationContext";
+import { useResults } from "../hooks/useResults";
+import { useAuth } from "../hooks/useAuth";
+import { api } from "../api/axios";
 
 const chance = new Chance();
 
 export default function Generate() {
   const [numbers, setNumbers] = useState([]);
-  const { data } = useContext(DataContext);
-  const { isLoggedIn } = useContext(AuthenticationContext);
+  const { data = [], isLoading } = useResults();
+  const { isLoggedIn } = useAuth();
 
   // checkbox 1
   const [checkbox1, setCheckbox1] = useState(false);
@@ -118,32 +119,22 @@ export default function Generate() {
         currentDate.getMinutes().toString().padStart(2, "0"),
     };
 
-    const config = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(withDate),
-      credentials: "include",
-    };
-
     try {
-      const response = await fetch(
-        "https://lotto-production-5b11.up.railway.app/saved/user/saveNumbers",
-        config,
-      );
-      const data = await response.json();
-
-      if (!response.ok) {
-        toast.error(data.message || "Failed to save numbers");
-        return;
-      }
-
-      toast.success(data.message || "Numbers saved successfully");
+      const response = await api.post("/saved/user/saveNumbers", withDate, {
+        withCredentials: true,
+      });
+      queryClient.invalidateQueries({ queryKey: ["saved"] });
+      toast.success(response.data.message || "Numbers saved successfully");
     } catch (error) {
-      toast.error(error.message || "Unexpected error");
+      const errorMessage =
+        error.response?.data?.message || error.message || "Unexpected error";
+      toast.error(errorMessage);
     }
   };
+
+  if (isLoading) {
+    return <img src="7471270.png" className="spinner" alt="loading..." />;
+  }
 
   return (
     <div>
@@ -159,7 +150,7 @@ export default function Generate() {
         pauseOnHover
         theme="dark"
       />
-      {data.length > 0 ? (
+      {data.length > 0 && (
         <div className="generate">
           <form action="">
             <h2>OPTIONS</h2>
@@ -215,7 +206,7 @@ export default function Generate() {
                 onChange={() => setCheckbox2(!checkbox2)}
               />
               <label htmlFor="">
-                Generate with system{"   "}
+                Generate with system{"  "}
                 {checkbox2 ? (
                   <select
                     name="input3"
@@ -223,16 +214,14 @@ export default function Generate() {
                     value={input3}
                     onChange={(e) => setInput3(Number(e.target.value))}
                   >
-                    <option value="5" defaultValue={5}>
-                      5
-                    </option>
+                    <option value="5">5</option>
                     <option value="6">6</option>
                     <option value="7">7</option>
                   </select>
                 ) : (
                   5
                 )}
-                {"   "}of 50{" and "}
+                {"  "}of 50{" and "}
                 {checkbox2 ? (
                   <select
                     name="input4"
@@ -240,16 +229,14 @@ export default function Generate() {
                     value={input4}
                     onChange={(e) => setInput4(Number(e.target.value))}
                   >
-                    <option value="2" defaultValue={2}>
-                      2
-                    </option>
+                    <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
                   </select>
                 ) : (
                   2
                 )}
-                {"   "}of 12
+                {"  "}of 12
                 <p>(generuj liczby systemem)</p>
               </label>
             </div>
@@ -293,33 +280,32 @@ export default function Generate() {
           <div className="generate-1">
             {numbers
               ? numbers.map((element, index) => (
-                  <div className="generate-1-5" key={index}>
+                  <div className="generate-1-5" key={element.id || index}>
                     <div className="generate-2">
-                      {element.five.map((e, index) => (
-                        <div className="five" key={index}>
+                      {element.five.map((e, idx) => (
+                        <div className="five" key={idx}>
                           {e}
                         </div>
                       ))}
-                      {element.two.map((e, index) => (
-                        <div className="two" key={index}>
+                      {element.two.map((e, idx) => (
+                        <div className="two" key={idx}>
                           {e}
                         </div>
                       ))}
                     </div>
-                    <button
-                      key={element.id}
-                      onClick={() => handleSave(element)}
-                      className="green-button"
-                    >
-                      Save
-                    </button>
+                    {isLoggedIn && (
+                      <button
+                        onClick={() => handleSave(element)}
+                        className="green-button"
+                      >
+                        Save
+                      </button>
+                    )}
                   </div>
                 ))
               : null}
           </div>
         </div>
-      ) : (
-        <img src="7471270.png" className="spinner" />
       )}
     </div>
   );
